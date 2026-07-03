@@ -1,0 +1,60 @@
+import { Link } from "@tanstack/react-router";
+import logo from "@/assets/one-retail-logo.png";
+import { useTranslation } from "react-i18next";
+import { Mail, MapPin, Phone } from "lucide-react";
+
+export function Footer() {
+  const { t } = useTranslation();
+  const year = new Date().getFullYear();
+  return (
+    <footer className="bg-[#111111] text-[#f5f0e6]/70 border-t border-[#f5f0e6]/10 py-10 px-6 font-sans relative">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid items-center gap-2">
+          <img src={logo} alt="One Retail" className="h-12 w-auto" />
+          <p className="text-xs text-[#f5f0e6]/50 leading-relaxed tracking-wider font-light">
+            L’excellence opérationnelle et esthétique au service des franchises de luxe de demain.
+          </p>
+        </div>
+        <div>
+          <h4 className="text-xs uppercase tracking-[0.2em] font-medium text-[#f5f0e6]">{t("nav.services")}</h4>
+          <ul className="mt-4 space-y-2 space-y-2 text-xs font-light">
+            <li><Link to="/services/lifestyle" className="hover:text-[#ab2d26] transition-colors cursor-pointer">{t("nav.lifestyle")}</Link></li>
+            <li><Link to="/services/beauty" className="hover:text-[#ab2d26] transition-colors cursor-pointer">{t("nav.beauty")}</Link></li>
+            <li><Link to="/services/restauration" className="hover:text-[#ab2d26] transition-colors cursor-pointer">{t("nav.restauration")}</Link></li>
+            <li><Link to="/services/bricolage" className="hover:text-[#ab2d26] transition-colors cursor-pointer">{t("nav.bricolage")}</Link></li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-xs uppercase tracking-[0.2em] font-medium text-[#f5f0e6]">Navigation</h4>
+          <ul className="mt-4 space-y-2 space-y-2 text-xs font-light">
+            <li><Link to="/franchise" className="hover:text-[#ab2d26] transition-colors cursor-pointer">{t("nav.franchise")}</Link></li>
+            <li><Link to="/carriere" className="hover:text-[#ab2d26] transition-colors cursor-pointer">{t("nav.carriere")}</Link></li>
+            <li><Link to="/actualites" className="hover:text-[#ab2d26] transition-colors cursor-pointer">{t("nav.actualites")}</Link></li>
+            <li><Link to="/contact" className="hover:text-[#ab2d26] transition-colors cursor-pointer">{t("nav.contact")}</Link></li>
+          </ul>
+        </div>
+         {/* Contact/HQ Column */}
+        <div className="space-y-4 text-xs font-light">
+          <h4 className="text-xs uppercase tracking-[0.2em] font-medium text-[#f5f0e6]">
+            Headquarters
+          </h4>
+          <div className="space-y-2.5">
+            <div className="flex items-start gap-2">
+              <MapPin className="w-4 h-4 text-[#640705] shrink-0 mt-0.5" />
+              <span>409 Rte d'El Jadida, Casablanca, Maroc</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Mail className="w-4 h-4 text-[#640705] shrink-0" />
+              <a href="mailto:contact@oneretail.ma">contact@oneretail.ma</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="max-w-7xl mx-auto border-t border-[#f5f0e6]/5 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest text-[#f5f0e6]/30 space-y-4 md:space-y-0">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 text-xs text-ink-soft md:flex-row">
+          <span>Tous les droits réservés © {year} H&S Invest Holding.</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
