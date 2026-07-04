@@ -44,7 +44,6 @@ export function Navbar() {
 
   const links: { to: string; label: string; key: string }[] = [
     { to: "/", label: t("nav.home"), key: "home" },
-    { to: "/a-propos", label: t("nav.apropos"), key: "apropos" },
     { to: "/services/lifestyle", label: t("nav.services"), key: "services" },
     { to: "/contact", label: t("nav.contact"), key: "contact" },
     { to: "/actualites", label: t("nav.actualites"), key: "actualites" },
