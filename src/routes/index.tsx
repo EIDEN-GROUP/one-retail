@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, ArrowRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Sparkles, ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence, useTransform, useScroll } from "framer-motion";
 import { EASE, VIEWPORT, Reveal, Stagger, StaggerItem, fadeUpItem, staggerContainer } from "@/components/Reveal";
@@ -22,87 +22,53 @@ import svcBeauty from "@/assets/svc-beauty.jpg";
 import svcBricolage from "@/assets/svc-bricolage.jpg";
 import { useTranslation } from "react-i18next";
 
-const services = [
+const SERVICES = [
   {
     key: "lifestyle",
-    label: "Lifestyle",
     to: "/services/lifestyle",
+    label: "Lifestyle",
+    brands: ["Monoprix", "Franprix"],
+    sub: "La grande distribution repensée avec soin et ambition.",
     img: svcLifestyle,
-    desc: "Alimentation de proximité, supermarché urbain et essentiels du quotidien Franprix & Monoprix.",
-  },
-  {
-    key: "restauration",
-    label: "Restauration",
-    to: "/services/restauration",
-    img: svcRestauration,
-    desc: "Coffee, sweet, salé et glaces artisanales. Une pause savoureuse signée Venezia-Ice & Dahab Coffee.",
   },
   {
     key: "beauty",
-    label: "Beauty",
     to: "/services/beauty",
+    label: "Beauty",
+    brands: ["Flormar", "Beauty For You"],
+    sub: "L'univers cosmétique à portée de tous, avec exigence.",
     img: svcBeauty,
-    desc: "Make-up, haircare et soins livrés en un clic. Votre destination beauté avec BeautyForYou & Flormar.",
+  },
+  {
+    key: "restauration",
+    to: "/services/restauration",
+    label: "Restauration",
+    brands: ["Venezia Ice", "Dahab Coffee"],
+    sub: "Des concepts de restauration qui éveillent les sens.",
+    img: svcRestauration,
   },
   {
     key: "bricolage",
-    label: "Bricolage",
     to: "/services/bricolage",
+    label: "Bricolage",
+    brands: ["Mr Bricolage"],
+    sub: "L'équipement de la maison et du quotidien, accessible.",
     img: svcBricolage,
-    desc: "La référence DIY & Pro pour créer, rénover et améliorer la maison Mr.Bricolage Maroc.",
   },
 ] as const;
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "One Retail — Au cœur du commerce marocain moderne" },
-      { name: "description", content: "One Retail réunit des enseignes complémentaires au Maroc : lifestyle, beauté, restauration et bricolage." },
-      { property: "og:title", content: "One Retail — Au cœur du commerce marocain moderne" },
-      { property: "og:description", content: "Quatre univers, une exigence — One Retail." },
+      { title: "One Retail - Votre Écosystème Retail au Maroc | H&S Group" },
+      { name: "description", content: "One Retail - Votre Écosystème Retail au Maroc | H&S Group" },
+      { property: "og:title", content: "One Retail - Votre Écosystème Retail au Maroc | H&S Group" },
+      { property: "og:description", content: "One Retail - Votre Écosystème Retail au Maroc | H&S Group" },
       { property: "og:image", content: heroImg },
     ],
   }),
   component: Home,
 });
-
-const values = [
-  {
-    title: "Ownership",
-    body: "Nous agissons en entrepreneurs responsables, où chaque collaborateur est acteur de la réussite collective.",
-  },
-  {
-    title: "Agility",
-    body: "Face aux changements, nous transformons chaque défi en opportunité grâce à notre adaptation rapide.",
-  },
-  {
-    title: "Simplicity",
-    body: "Nous privilégions la clarté et l'efficacité, en transformant la complexité en solutions accessibles.",
-  },
-  {
-    title: "Integrity",
-    body: "L'honnêteté, le respect et la transparence guident chacune de nos décisions et renforcent la confiance.",
-  },
-  {
-    title: "Sustainability",
-    body: "Nous intégrons la responsabilité sociale et environnementale pour créer une valeur durable et partagée.",
-  },
-];
-
-const missions = [
-  {
-    title: "Proximité",
-    body: "Des enseignes au cœur des villes, accessibles et adaptées aux nouveaux modes de vie.",
-  },
-  {
-    title: "Qualité & fiabilité",
-    body: "Une exigence constante dans l'offre, le service et la gestion opérationnelle.",
-  },
-  {
-    title: "Innovation & digitalisation",
-    body: "Un modèle omnicanal moderne, pensé pour simplifier et enrichir chaque expérience client.",
-  },
-];
 
 const brandLogos = [
   { name: "Franprix", img: brandFranprix },
@@ -112,7 +78,6 @@ const brandLogos = [
   { name: "BeautyForYou", img: brandBeauty },
   { name: "Flormar", img: brandFlormar },
   { name: "Dahab", img: brandDahab },
-  { name: "H&S Group", img: brandHS },
 ];
 
 const titleReveal = {
@@ -171,14 +136,8 @@ function Home() {
 }
 
 function HeroTitle() {
-  const words: { text: string; brand?: boolean; breakBefore?: boolean }[] = [
-    { text: "Au" },
-    { text: "cœur" },
-    { text: "du" },
-    { text: "commerce", brand: true },
-    { text: "marocain", breakBefore: true },
-    { text: "moderne." },
-  ];
+  const { t } = useTranslation();
+  const words = t("home.hero.words", { returnObjects: true }) as { text: string; brand?: boolean; breakBefore?: boolean }[];
   return (
     <h1 className="font-display text-[clamp(2rem,8vw,7rem)] leading-[0.95] text-cream">
       {words.map((w, i) => (
@@ -199,6 +158,7 @@ function HeroTitle() {
 }
 
 function Hero() {
+  const { t } = useTranslation();
   return (
     <section className="relative mx-2 mt-2 pt-10 overflow-hidden rounded-2xl sm:mx-4 sm:mt-4 sm:rounded-[2rem]">
       <motion.img
@@ -221,7 +181,7 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE, delay: INTRO + 0.95 }}
           >
-            One Retail réunit des enseignes complémentaires qui accompagnent le consommateur dans tous les moments de la vie quotidienne : alimentation, restauration, beauté, e-commerce et bricolage.
+            {t("home.hero.sub")}
           </motion.p>
           <motion.div
             className="mt-4 flex flex-col gap-2 sm:mt-6 sm:flex-row sm:flex-wrap sm:gap-3"
@@ -233,14 +193,13 @@ function Hero() {
               href="#services"
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-cream px-5 py-3 text-sm font-semibold text-ink transition hover:bg-brand hover:text-cream sm:px-6 sm:py-3.5"
             >
-              Découvrir nos enseignes
+              {t("cta.discover")}
               <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
-            <Link
-              to="/a-propos"
+            <Link to="#about"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-cream/40 px-5 py-3 text-sm font-semibold text-cream transition hover:border-cream hover:bg-cream/10 sm:px-6 sm:py-3.5"
             >
-              Qui sommes-nous
+              {t("cta.about")}
             </Link>
           </motion.div>
         </div>
@@ -279,7 +238,14 @@ function About() {
   const y = useTransform(scrollYProgress, [0, 1], ["5%", "-20%"]);
   return (
     <section id="about" ref={ref} className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-      <Eyebrow className="mb-6 text-brand sm:mb-8">Qui sommes-nous</Eyebrow>
+      <Eyebrow className="mb-6 text-brand sm:mb-8">{t("home.about.eyebrow")}</Eyebrow>
+      <div>
+        <motion.h2 {...titleReveal} className="font-display text-4xl leading-[1.02] text-ink sm:text-5xl md:text-7xl">
+          {t("home.about.title")}
+        </motion.h2>
+        <motion.h3 {...titleReveal} className="mt-3 font-display font-medium text-sm leading-tight md:text-md text-[#ab2d26]">{t("home.about.subtitle")}</motion.h3>
+      </div>
+      
       <div className="grid items-center gap-16 lg:grid-cols-2">
           <Reveal>
             <p className="mb-4 text-sm leading-relaxed text-ink-soft md:text-base">{t("home.about.body")}</p>
@@ -299,11 +265,12 @@ function About() {
 }
 
 function PresidentQuote() {
+  const { t } = useTranslation();
   return (
     <section className="relative mx-2 mb-10 overflow-hidden rounded-2xl bg-[#640705] sm:mx-4 sm:mb-16 sm:rounded-[2rem]">
       <div className="mx-auto px-4 pt-10 sm:px-6 sm:pt-14 md:px-10 md:pt-20">
         <Eyebrow className="mb-6 text-cream/70 sm:mb-8" lineClassName="bg-cream/50">
-          Mot du Président
+          {t("home.president.sectionTitle")}
         </Eyebrow>
         <div className="grid items-end gap-6 md:grid-cols-12">
           <div className="order-2 self-end md:order-1 md:col-span-5 h-full">
@@ -332,14 +299,14 @@ function PresidentQuote() {
             </motion.span>
             <motion.blockquote
               {...titleReveal}
-              className="font-display -mt-3 text-xl leading-snug text-cream sm:-mt-4 sm:text-2xl md:text-4xl"
+              className="font-display -mt-3 text-xl leading-snug text-cream sm:-mt-4 sm:text-lg md:text-xl"
             >
-              One Retail incarne notre vision d'un retail marocain moderne, structuré et orienté expérience. Notre objectif est clair : bâtir un retail innovant, accessible, ambitieux et durable.
+              {t("home.president.quote")}
             </motion.blockquote>
             <Reveal delay={0.25} y={24}>
               <div className="mt-4 border-t border-cream/15 pt-3 sm:mt-6 sm:pt-4">
-                <div className="text-sm font-semibold text-cream sm:text-base">Moncef Belkhayat</div>
-                <div className="text-xs text-cream/60 sm:text-sm">Président de H&S Group</div>
+                <div className="text-sm font-semibold text-cream sm:text-base">{t("home.president.name")}</div>
+                <div className="text-xs text-cream/60 sm:text-sm">{t("home.president.title")}</div>
               </div>
             </Reveal>
           </div>
@@ -350,12 +317,19 @@ function PresidentQuote() {
 }
 
 function OurSolution() {
+  const { t } = useTranslation();
+  const items = [
+    { ...SERVICES[0], num: "01" },
+    { ...SERVICES[1], num: "02" },
+    { ...SERVICES[2], num: "03" },
+    { ...SERVICES[3], num: "04" },
+  ];
   const [idx, setIdx] = useState(0);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const total = services.length;
+  const total = items.length;
   const prev = () => setIdx((i) => (i - 1 + total) % total);
   const next = () => setIdx((i) => (i + 1) % total);
-  const active = services[idx];
+  const active = items[idx];
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -375,12 +349,9 @@ function OurSolution() {
     <section id="services" className="bg-cream">
       <div className="mx-auto grid max-w-7xl gap-6 px-4 py-10 sm:gap-10 sm:px-6 sm:py-14 md:grid-cols-12 md:py-20">
         <div className="md:col-span-5 md:pt-4">
-          <Eyebrow className="mb-4 text-brand sm:mb-6">Nos services</Eyebrow>
-          <motion.h2
-            {...titleReveal}
-            className="font-display text-4xl leading-[1.02] text-ink sm:text-5xl md:text-7xl"
-          >
-            Our <br /> Solution
+          <Eyebrow className="mb-4 text-brand sm:mb-6">{t("home.pillars.eyebrow")}</Eyebrow>
+          <motion.h2 {...titleReveal} className="font-display text-4xl leading-[1.02] text-ink sm:text-5xl md:text-7xl">
+            {t("home.pillars.title")}
           </motion.h2>
           <AnimatePresence mode="wait">
             <motion.p
@@ -391,42 +362,29 @@ function OurSolution() {
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.4, ease: EASE }}
             >
-              {active.desc}
+              {t(`home.services.${active.key}.sub`)}
             </motion.p>
           </AnimatePresence>
 
           <motion.div
-            className="mt-5 sm:mt-6"
+            className="mt-5 sm:mt-6 flex justify-start mt-10"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={VIEWPORT}
             transition={{ duration: 0.5, ease: EASE, delay: 0.2 }}
           >
-            <Link
-              to={active.to}
-              className="group inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-cream transition hover:bg-brand-deep"
-            >
-              En Savoir Plus
-              <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <Link to={active.to} className="group inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-cream transition hover:bg-brand-deep">
+              {t("cta.explore")}
+              <ArrowUpRight size={14} className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </motion.div>
         </div>
 
         <Reveal className="relative md:col-span-7" y={56} delay={0.15}>
           <div className="relative overflow-hidden">
-            <div
-              className="flex transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
-              style={{
-                gap,
-                transform: `translateX(calc(${-idx} * (${cardWidth}% + ${gap})))`,
-              }}
-            >
-              {services.map((s, i) => (
-                <Link
-                  key={s.key}
-                  to={s.to}
-                  className="relative aspect-[3/4] w-[75%] shrink-0 overflow-hidden rounded-2xl bg-ink/5 sm:w-[66%] sm:rounded-[2rem]"
-                >
+            <div className="flex transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]" style={{ gap, transform: `translateX(calc(${-idx} * (${cardWidth}% + ${gap})))`, }}>
+              {items.map((s, i) => (
+                <Link key={s.key} to={s.to} className="relative aspect-[3/4] w-[75%] shrink-0 overflow-hidden rounded-2xl bg-ink/5 sm:w-[66%] sm:rounded-[2rem]">
                   <img
                     src={s.img}
                     alt={s.label}
@@ -438,7 +396,7 @@ function OurSolution() {
                     }`}
                   />
                   <span className="absolute bottom-3 left-3 rounded-full bg-cream/95 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-ink sm:bottom-4 sm:left-4 sm:px-4 sm:py-1.5 sm:text-xs sm:tracking-[0.2em]">
-                    {s.label}
+                    {t(`home.services.${s.key}.label`)}
                   </span>
                 </Link>
               ))}
@@ -475,39 +433,40 @@ function OurSolution() {
 }
 
 function ValuesSection() {
+  const { t } = useTranslation();
+  const values = t("home.values.items", { returnObjects: true }) as { n: string; t: string; d: string }[];
   return (
     <section id="values" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 md:py-20">
-      <Eyebrow className="mb-6 text-brand sm:mb-8">Nos valeurs</Eyebrow>
+      <Eyebrow className="mb-6 text-brand sm:mb-8">{t("home.values.eyebrow")}</Eyebrow>
       <motion.h2
         {...titleReveal}
         className="font-display max-w-5xl text-3xl leading-[1.05] text-ink sm:text-4xl md:text-6xl"
       >
-        Nos engagements et convictions définissent qui nous sommes et guident chaque décision vers un succès durable.
+        {t("home.values.title")}
       </motion.h2>
 
       <Stagger
         className="mt-6 grid gap-px overflow-hidden rounded-2xl border border-ink/10 bg-ink/10 sm:mt-10 sm:rounded-3xl md:grid-cols-3"
         stagger={0.1}
       >
-        {values.map((v, i) => (
+        {values.map((v) => (
           <StaggerItem
-            key={v.title}
+            key={v.t}
             className="group relative bg-cream p-5 transition hover:bg-brand hover:text-cream sm:p-6"
           >
             <span className="font-display text-xs text-brand transition group-hover:text-cream/70 sm:text-sm">
-              0{i + 1}
+              {v.n}
             </span>
-            <h3 className="font-display mt-2 text-2xl sm:mt-3 sm:text-3xl">{v.title}</h3>
+            <h3 className="font-display mt-2 text-2xl sm:mt-3 sm:text-3xl">{v.t}</h3>
             <p className="mt-3 text-xs leading-relaxed text-ink/70 transition group-hover:text-cream/85 sm:mt-4 sm:text-sm">
-              {v.body}
+              {v.d}
             </p>
           </StaggerItem>
         ))}
         <StaggerItem className="flex flex-col justify-between bg-ink p-5 text-cream sm:p-6 md:col-span-1">
           <Sparkles className="h-5 w-5 text-brand sm:h-6 sm:w-6" />
           <p className="font-display mt-4 text-xl leading-tight sm:mt-6 sm:text-2xl">
-            Cinq convictions, un même engagement : bâtir un retail marocain
-            ambitieux et durable.
+            {t("home.values.highlight")}
           </p>
         </StaggerItem>
       </Stagger>
@@ -516,6 +475,9 @@ function ValuesSection() {
 }
 
 function Ambition() {
+  const { t } = useTranslation();
+  const ambitionItems = t("home.ambitions.items", { returnObjects: true }) as { n: string; d: string }[];
+  const missionItems = t("home.missions.items", { returnObjects: true }) as { t: string; d: string }[];
   return (
     <section id="ambition" className="relative mx-2 overflow-hidden rounded-2xl sm:mx-4 sm:rounded-[2rem]">
       <motion.img
@@ -534,16 +496,16 @@ function Ambition() {
       <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 md:px-10 md:py-20">
         <div className="grid gap-6 sm:gap-10 md:grid-cols-12">
           <div className="md:col-span-7">
-            <Eyebrow className="mb-3 text-brand sm:mb-4">Notre ambition & mission</Eyebrow>
+            <Eyebrow className="mb-3 text-brand sm:mb-4">{t("home.ambitions.eyebrow")}</Eyebrow>
             <motion.h2
               {...titleReveal}
               className="font-display text-3xl leading-[1.05] text-cream sm:text-4xl md:text-6xl"
             >
-              Construire un écosystème retail moderne, agile et durable une référence régionale.
+              {t("home.ambitions.title")}
             </motion.h2>
             <Reveal delay={0.2}>
               <p className="mt-3 max-w-xl text-sm text-cream/70 sm:mt-4 sm:text-base">
-                Apporter aux Marocains un retail moderne, pratique et inspirant : des lieux, des services et des expériences qui simplifient le quotidien, améliorent le confort de vie et créent du lien.
+                {t("home.ambitions.body")}
               </p>
             </Reveal>
           </div>
@@ -554,36 +516,37 @@ function Ambition() {
             whileInView="visible"
             viewport={VIEWPORT}
           >
-            {[
-              "Déployer un réseau multi-enseignes dans toutes les grandes villes.",
-              "Renforcer l'implantation dans les capitales régionales africaines.",
-              "Étendre le modèle omnicanal pour toucher de nouveaux marchés.",
-              "Nouer des partenariats stratégiques avec des acteurs internationaux.",
-            ].map((t, i) => (
+            {ambitionItems.map((item) => (
               <motion.li
-                key={i}
+                key={item.n}
                 variants={fadeUpItem}
-                className="flex items-start gap-3 rounded-xl border border-cream/15 bg-cream/[0.06] p-4 text-cream backdrop-blur sm:gap-4 sm:rounded-2xl sm:p-5"
+                className="flex ambitionItems-start gap-3 rounded-xl border border-cream/15 bg-cream/[0.06] p-4 text-cream backdrop-blur sm:gap-4 sm:rounded-2xl sm:p-5"
               >
-                <span className="font-display text-xl text-brand sm:text-2xl">0{i + 1}</span>
-                <span className="text-xs leading-relaxed text-cream/90 sm:text-sm">{t}</span>
+                <span className="font-display text-xl text-brand sm:text-2xl">{item.n}</span>
+                <span className="text-xs leading-relaxed text-cream/90 sm:text-sm">{item.d}</span>
               </motion.li>
             ))}
           </motion.ul>
         </div>
 
-        <Stagger className="mt-6 grid gap-3 border-t border-cream/10 pt-6 sm:mt-10 sm:gap-5 sm:pt-8 md:grid-cols-3" stagger={0.15}>
-          {missions.map((m, i) => (
-            <StaggerItem
-              key={m.title}
-              className="rounded-xl border border-cream/10 bg-cream/[0.04] p-5 text-cream backdrop-blur sm:rounded-2xl sm:p-6"
-            >
-              {/* <span className="font-display text-2xl text-brand sm:text-3xl">0{i + 1}</span> */}
-              <h3 className="font-display mt-2 text-xl sm:mt-3 sm:text-2xl">{m.title}</h3>
-              <p className="mt-2 text-xs leading-relaxed text-cream/75 sm:mt-3 sm:text-sm">{m.body}</p>
-            </StaggerItem>
-          ))}
-        </Stagger>
+        <div className="flex flex-col items-center mt-10 border-t border-cream/10 pt-6 sm:mt-14 sm:pt-8">
+          <p className="mt-3 max-w-4xl text-center text-sm text-cream/70 sm:mt-4 sm:text-base">{t("home.missions.body")}</p>
+          <Stagger className="grid gap-3 pt-6 sm:gap-5 sm:pt-8 md:grid-cols-3" stagger={0.15}>
+            {missionItems.map((m) => (
+              <StaggerItem 
+                key={m.t} 
+                variants={fadeUpItem} 
+                className="rounded-xl border border-cream/10 bg-cream p-5 text-cream backdrop-blur sm:rounded-2xl sm:p-6">
+                {/* <span className="font-display text-2xl text-brand sm:text-3xl">0{i + 1}</span> */}
+                <div className="flex items-center gap-2">
+                  <Check className="h-5 w-5 shrink-0 text-brand sm:h-6 sm:w-6" />
+                  <h3 className="font-display text-xl sm:text-2xl text-brand">{m.t}</h3>
+                </div>
+                <p className="mt-2 text-xs leading-relaxed text-ink/75 sm:mt-3 sm:text-sm">{m.d}</p>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </div>
       </div>
     </section>
   );
@@ -599,12 +562,12 @@ function News() {
     <section id="news" ref={ref} className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 md:py-20">
       <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:mb-8 sm:flex-row sm:flex-wrap sm:items-end sm:gap-6">
         <div>
-          <Eyebrow className="mb-3 text-brand sm:mb-4">Actualités</Eyebrow>
+          <Eyebrow className="mb-3 text-brand sm:mb-4">{t("home.news.eyebrow")}</Eyebrow>
           <motion.h2
             {...titleReveal}
             className="font-display max-w-3xl text-3xl leading-[1.05] text-ink sm:text-4xl md:text-6xl"
           >
-            Les dernières nouvelles de notre écosystème.
+            {t("home.news.title")}
           </motion.h2>
         </div>
         <Reveal delay={0.25} y={24}>
@@ -648,7 +611,7 @@ function News() {
               </h3>
               <p className="mt-2 text-xs leading-relaxed text-ink/70 sm:mt-3 sm:text-sm">{n.excerpt}</p>
               <span className="mt-3 inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-brand transition group-hover:gap-3 sm:mt-4 sm:text-xs sm:tracking-[0.25em]">
-                Lire l'article
+                {t("cta.readMore")}
                 <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
               </span>
             </Link>
@@ -660,6 +623,7 @@ function News() {
 }
 
 function ContactCTA() {
+  const { t } = useTranslation();
   return (
     <section id="contact" className="px-2 pb-6 sm:px-4 sm:pb-8">
       <motion.div
@@ -679,17 +643,17 @@ function ContactCTA() {
         <div className="relative grid items-center gap-6 sm:gap-8 md:grid-cols-12">
           <div className="md:col-span-8">
             <Eyebrow className="mb-3 text-cream/70 sm:mb-4" lineClassName="bg-cream/50">
-              Contact
+              {t("home.contactCta.eyebrow")}
             </Eyebrow>
             <motion.h2
               {...titleReveal}
               className="font-display text-3xl leading-[1.05] text-cream sm:text-4xl md:text-6xl"
             >
-              Parlons de votre projet retail.
+              {t("home.contactCta.title")}
             </motion.h2>
             <Reveal delay={0.2}>
               <p className="mt-3 max-w-xl text-sm text-cream/75 sm:mt-4 sm:text-base">
-                Partenariat, franchise, presse ou opportunités professionnelles : notre équipe One Retail vous accompagne à chaque étape.
+                {t("home.contactCta.body")}
               </p>
             </Reveal>
           </div>
@@ -699,7 +663,7 @@ function ContactCTA() {
                 to="/contact"
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-cream px-6 py-3.5 text-sm font-semibold text-ink transition hover:bg-brand hover:text-cream sm:px-10 sm:py-4"
               >
-                Nous contacter
+                {t("cta.contactUs")}
                 <ArrowUpRight className="h-4 w-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Link>
             </StaggerItem>
@@ -708,7 +672,7 @@ function ContactCTA() {
                 to="/franchise"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-cream/30 px-6 py-3.5 text-sm font-semibold text-cream transition hover:border-cream hover:bg-cream/10 sm:px-10 sm:py-4"
               >
-                Devenir franchisé
+                {t("cta.becomeFranchisee")}
                 <ArrowUpRight className="h-4 w-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Link>
             </StaggerItem>

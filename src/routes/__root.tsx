@@ -16,6 +16,7 @@ import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
 import { SmoothScroll } from "../components/SmoothScroll";
 import { Preloader } from "../components/Preloader";
+import { BackToTop } from "../components/BackToTop";
 
 function NotFoundComponent() {
   return (
@@ -100,6 +101,7 @@ function RootComponent() {
         {navVisible && <Navbar />}
         <Outlet />
         <Footer />
+        <BackToTop />
       </SmoothScroll>
     </QueryClientProvider>
   );
