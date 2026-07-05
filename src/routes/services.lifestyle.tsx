@@ -17,7 +17,6 @@ export const Route = createFileRoute("/services/lifestyle")({
       title="L'art de vivre, au quotidien."
       intro="Deux signatures, une même conviction : la proximité comme service noble. Monoprix et Franprix incarnent un quotidien plus juste, mieux sourcé, mieux raconté."
       franchises={getByCategory("lifestyle")}
-      basePath="/services/lifestyle"
     />
   ),
 });

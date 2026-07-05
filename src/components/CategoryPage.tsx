@@ -11,13 +11,11 @@ export function CategoryPage({
   title,
   intro,
   franchises,
-  basePath,
 }: {
   eyebrow: string;
   title: string;
   intro: string;
   franchises: Franchise[];
-  basePath: string;
 }) {
   const { t } = useTranslation();
   return (
@@ -34,7 +32,7 @@ export function CategoryPage({
         <div className={`mx-auto grid max-w-6xl gap-8 ${franchises.length > 1 ? "md:grid-cols-2" : "md:grid-cols-1 md:max-w-3xl"}`}>
           {franchises.map((f, i) => (
             <Reveal key={f.slug} delay={i * 0.1}>
-              <Link to={`${basePath}/${f.slug}` as never} className="group block">
+              <Link to="/franchise/$slug" params={{ slug: f.slug }} className="group block">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-ink/10 bg-pearl-deep">
                   <motion.img
                     src={f.image}

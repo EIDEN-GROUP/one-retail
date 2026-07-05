@@ -102,6 +102,22 @@
 
   ::selection { background: var(--wine-deep); color: var(--pearl); }
 
+  /* Scrollbar — Firefox (only where ::-webkit-scrollbar is unsupported) */
+  @supports not selector(::-webkit-scrollbar) {
+    html { scrollbar-width: thin; scrollbar-color: var(--wine) var(--pearl-deep); }
+  }
+
+  /* Scrollbar — WebKit (Chrome, Edge, Safari) */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--pearl-deep); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--wine);
+    border-radius: 999px;
+    border: 2px solid var(--pearl-deep);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--brick); }
+  ::-webkit-scrollbar-corner { background: var(--pearl-deep); }
+
   h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
 }
 

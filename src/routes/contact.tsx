@@ -1,139 +1,328 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Fragment, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
+import { Phone, Mail, MapPin, Send } from "lucide-react";
 import { EASE, VIEWPORT, Reveal, Stagger, StaggerItem } from "@/components/Reveal";
-import { MapPin, Mail, Phone } from "lucide-react";
-
-function LinkedinIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
-      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
-    </svg>
-  );
-}
+import contactHero from "@/assets/about-casablanca.jpg";
 
 export const Route = createFileRoute("/contact")({
+  component: ContactPage,
   head: () => ({
     meta: [
-      { title: "Contact — One Retail" },
-      { name: "description", content: "Contactez One Retail. Casablanca, Maroc." },
-      { property: "og:title", content: "Contact — One Retail" },
-      { property: "og:description", content: "Contactez les équipes One Retail." },
+      { title: "Contact One Retail Maroc | Nous Contacter & Service Client" },
+      {
+        name: "description",
+        content:
+          "Contactez One Retail : partenariats, franchise, presse et opportunités. 409 route d'Eljadida, Casablanca.",
+      },
+      { property: "og:title", content: "Contact One Retail Maroc | Nous Contacter & Service Client" },
+      {
+        property: "og:description",
+        content: "Nous sommes à votre écoute. Contactez les équipes One Retail.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: ContactPage,
 });
 
-const LINKEDIN_URL = "https://www.linkedin.com/company/one-retail";
-// 409 Route d'El Jadida, Casablanca (quartier Oasis)
-const HQ_COORDS = { lat: 33.5563, lon: -7.6412 };
-const MAP_SRC = `https://www.openstreetmap.org/export/embed.html?bbox=${HQ_COORDS.lon - 0.012}%2C${HQ_COORDS.lat - 0.007}%2C${HQ_COORDS.lon + 0.012}%2C${HQ_COORDS.lat + 0.007}&layer=mapnik&marker=${HQ_COORDS.lat}%2C${HQ_COORDS.lon}`;
+// Sur un chargement direct, le preloader global (__root) couvre la page ~1.8s :
+// on retarde les animations d'intro comme sur la home. En navigation SPA, pas d'attente.
+const INTRO = typeof window !== "undefined" && performance.now() < 1800 ? 1.8 : 0;
 
-function Eyebrow({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <motion.div
-      className={`flex items-center gap-3 text-xs uppercase tracking-[0.3em] ${className}`}
-      initial={{ opacity: 0, x: -24 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={VIEWPORT}
-      transition={{ duration: 0.7, ease: EASE }}
-    >
-      <motion.span
-        className="h-px w-10 origin-left bg-brand"
-        initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={VIEWPORT}
-        transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
-      />
-      {children}
-    </motion.div>
-  );
-}
-
-const INFOS = [
-  { icon: Mail, label: "Email", value: "contact@oneretail.ma", href: "mailto:contact@oneretail.ma" },
-  { icon: Phone, label: "Téléphone", value: "05 20 40 07 31", href: "tel:+212520400731" },
-  { icon: MapPin, label: "Adresse", value: "409 route d'Eljadida, Casablanca 20232", href: undefined },
-] as const;
+const titleReveal = {
+  initial: { opacity: 0, y: 40, filter: "blur(8px)" },
+  whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
+  viewport: VIEWPORT,
+  transition: { duration: 0.9, ease: EASE },
+};
 
 function ContactPage() {
   return (
-    <main className="min-h-screen bg-white pt-28 text-ink sm:pt-32">
-      <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 sm:pb-16">
-        <div className="grid gap-10 md:grid-cols-12 md:gap-12">
-          <div className="md:col-span-5">
-            <Eyebrow className="mb-6 text-brand sm:mb-8">Contactez-Nous</Eyebrow>
-            <motion.h1
-              initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.9, ease: EASE }}
-              className="font-display text-4xl leading-[1.02] sm:text-5xl md:text-7xl"
+    <div className="min-h-screen bg-cream text-ink">
+      <ContactHero />
+      <MapSection />
+    </div>
+  );
+}
+
+function HeroTitle() {
+  const { t } = useTranslation();
+  const words = t("contact.heroTitle").split(" ");
+  return (
+    <h1 className="font-display text-[clamp(2.75rem,7vw,6rem)] leading-[0.95] text-cream">
+      {words.map((w, i) => (
+        <Fragment key={i}>
+          <motion.span
+            className="inline-block"
+            initial={{ opacity: 0, y: "0.5em", filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.9, ease: EASE, delay: INTRO + 0.35 + i * 0.09 }}
+          >
+            {w}
+          </motion.span>{" "}
+        </Fragment>
+      ))}
+    </h1>
+  );
+}
+
+function ContactHero() {
+  const { t } = useTranslation();
+  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [sent, setSent] = useState(false);
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSent(true);
+    setTimeout(() => setSent(false), 4000);
+    setForm({ name: "", email: "", subject: "", message: "" });
+  };
+
+  return (
+    <section className="relative mx-4 mt-4 overflow-hidden rounded-[2rem] bg-ink">
+      <motion.img
+        src={contactHero}
+        alt="Contact One Retail"
+        width={1920}
+        height={1080}
+        className="absolute inset-0 h-full w-full object-cover opacity-40"
+        initial={{ scale: 1.15 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 2, ease: EASE, delay: Math.max(0, INTRO - 0.6) }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.75) 55%, rgba(0,0,0,0.9) 100%)",
+        }}
+      />
+
+      <div className="relative px-6 pt-20 pb-16 md:px-14 md:pt-28 md:pb-24">
+        <div className="mx-auto max-w-6xl text-center">
+          <HeroTitle />
+        </div>
+
+        <div className="mx-auto mt-16 grid max-w-6xl items-start gap-10 md:grid-cols-12 md:gap-14">
+          {/* Left: info */}
+          <div className="md:col-span-5 md:pt-4">
+            <motion.div
+              className="mb-4 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-brand"
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={VIEWPORT}
+              transition={{ duration: 0.7, ease: EASE }}
             >
-              Nous sommes à votre <span className="text-brand">écoute</span>
-            </motion.h1>
-            <Reveal delay={0.2}>
-              <p className="mt-4 max-w-xl text-sm leading-relaxed text-ink/70 sm:mt-6 sm:text-base">
-                Que vous soyez un partenaire, un client, un fournisseur ou simplement intéressé par notre activité, n’hésitez pas à nous contacter. Nos équipes vous répondront dans les plus brefs délais.
+              <motion.span
+                className="h-px w-10 origin-left bg-brand"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={VIEWPORT}
+                transition={{ duration: 0.8, ease: EASE, delay: 0.2 }}
+              />
+              {t("contact.eyebrow")}
+            </motion.div>
+            <motion.h2
+              {...titleReveal}
+              className="font-display text-4xl leading-[1.05] text-cream md:text-5xl"
+            >
+              {t("contact.listenTitle")}
+            </motion.h2>
+            <Reveal delay={0.15}>
+              <p className="mt-5 max-w-md text-sm leading-relaxed text-cream/70">
+                {t("contact.intro")}
               </p>
             </Reveal>
-            <Reveal delay={0.3} y={24}>
-              <motion.a
-                href={LINKEDIN_URL}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn One Retail"
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.92 }}
-                className="mt-6 grid h-11 w-11 place-items-center rounded-full bg-brand text-cream transition-colors hover:bg-brand-deep sm:mt-8"
-              >
-                <LinkedinIcon className="h-5 w-5" />
-              </motion.a>
-            </Reveal>
-          </div>
 
-          <Stagger className="grid content-start gap-4 self-center md:col-span-7 sm:gap-5" stagger={0.12}>
-            {INFOS.map((info) => (
-              <StaggerItem
-                key={info.label}
-                className="group flex items-center gap-4 rounded-2xl bg-cream p-5 transition hover:bg-brand hover:text-cream sm:gap-5 sm:p-6"
-              >
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-brand text-cream transition group-hover:bg-cream group-hover:text-brand sm:h-12 sm:w-12">
-                  <info.icon className="h-5 w-5" />
-                </span>
-                <span>
-                  <span className="block text-[0.65rem] uppercase tracking-[0.25em] text-ink/45 transition group-hover:text-cream/70">
-                    {info.label}
-                  </span>
-                  {info.href ? (
-                    <a href={info.href} className="mt-1 block text-sm font-medium sm:text-base">
-                      {info.value}
-                    </a>
-                  ) : (
-                    <span className="mt-1 block text-sm font-medium sm:text-base">{info.value}</span>
-                  )}
-                </span>
+            <Stagger className="mt-10 grid gap-6 sm:grid-cols-1" stagger={0.15} delay={0.25}>
+              <StaggerItem>
+                <InfoItem
+                  icon={<Phone className="h-5 w-5" />}
+                  label={t("contact.info.phone")}
+                  value="05 20 40 07 31"
+                  href="tel:+212520400731"
+                />
               </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
-      </section>
-
-      <section className="mx-2 pb-8 sm:mx-4">
-        <Reveal y={40}>
-          <div className="relative overflow-hidden rounded-2xl sm:rounded-[2rem]">
-            <iframe
-              title="Siège One Retail — Casablanca"
-              src={MAP_SRC}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="h-[320px] w-full border-0 grayscale transition duration-700 hover:grayscale-0 sm:h-[440px]"
-            />
-            <div className="pointer-events-none absolute left-4 top-4 flex items-center gap-2 rounded-full bg-cream/95 px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-ink sm:left-6 sm:top-6 sm:text-xs">
-              <MapPin className="h-3.5 w-3.5 text-brand" />
-              409 route d'Eljadida, Casablanca 20232
-            </div>
+              <StaggerItem>
+                <InfoItem
+                  icon={<Mail className="h-5 w-5" />}
+                  label={t("contact.info.email")}
+                  value="contact@oneretail.ma"
+                  href="mailto:contact@oneretail.ma"
+                />
+              </StaggerItem>
+              <StaggerItem>
+                <InfoItem
+                  icon={<MapPin className="h-5 w-5" />}
+                  label={t("contact.info.address")}
+                  value="409 route d'Eljadida, Casablanca 20232"
+                />
+              </StaggerItem>
+            </Stagger>
           </div>
-        </Reveal>
-      </section>
-    </main>
+
+          {/* Right: form card */}
+          <Reveal className="md:col-span-7" y={56} delay={0.15}>
+            <div className="rounded-3xl bg-brand-deep p-6 md:p-10 shadow-[0_25px_80px_-15px_rgba(0,0,0,0.55),0_12px_30px_-10px_rgba(0,0,0,0.35)]">
+              <div className="mb-2 text-xs uppercase tracking-[0.3em] text-brand">
+                {t("contact.writeUs")}
+              </div>
+              <h3 className="font-display text-3xl text-cream md:text-4xl">
+                {t("contact.question")}
+              </h3>
+              <p className="mt-3 max-w-md text-sm text-cream/70">
+                {t("contact.formIntro")}
+              </p>
+
+              <Stagger className="mt-8" stagger={0.08} delay={0.3}>
+                <form onSubmit={onSubmit} className="space-y-4">
+                  <StaggerItem>
+                    <FormInput
+                      placeholder={t("contact.form.name")}
+                      value={form.name}
+                      onChange={(v) => setForm({ ...form, name: v })}
+                      required
+                      maxLength={100}
+                    />
+                  </StaggerItem>
+                  <StaggerItem>
+                    <FormInput
+                      type="email"
+                      placeholder={t("contact.form.email")}
+                      value={form.email}
+                      onChange={(v) => setForm({ ...form, email: v })}
+                      required
+                      maxLength={255}
+                    />
+                  </StaggerItem>
+                  <StaggerItem>
+                    <FormInput
+                      placeholder={t("contact.form.subject")}
+                      value={form.subject}
+                      onChange={(v) => setForm({ ...form, subject: v })}
+                      required
+                      maxLength={150}
+                    />
+                  </StaggerItem>
+                  <StaggerItem>
+                    <textarea
+                      placeholder={t("contact.form.message")}
+                      value={form.message}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      required
+                      maxLength={1000}
+                      rows={5}
+                      className="w-full resize-none rounded-xl border border-cream/20 bg-transparent px-4 py-3 text-sm text-cream placeholder:text-cream/40 transition focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                    />
+                  </StaggerItem>
+                  <StaggerItem>
+                    <motion.button
+                      type="submit"
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      className="group inline-flex items-center gap-2 rounded-full bg-brand px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.2em] text-cream transition hover:bg-brand-deep"
+                    >
+                      {t("cta.send")}
+                      <Send className="h-4 w-4 transition group-hover:translate-x-0.5" />
+                    </motion.button>
+                  </StaggerItem>
+                  {sent && (
+                    <motion.p
+                      className="text-xs text-brand"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, ease: EASE }}
+                    >
+                      {t("contact.sent")}
+                    </motion.p>
+                  )}
+                </form>
+              </Stagger>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InfoItem({
+  icon,
+  label,
+  value,
+  href,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  href?: string;
+}) {
+  const inner = (
+    <div className="flex items-start gap-3">
+      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-brand/60 text-brand">
+        {icon}
+      </span>
+      <div>
+        <div className="text-[0.7rem] uppercase tracking-[0.25em] text-cream/50">{label}</div>
+        <div className="mt-1 text-sm text-cream">{value}</div>
+      </div>
+    </div>
+  );
+  return href ? (
+    <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="transition hover:opacity-80">
+      {inner}
+    </a>
+  ) : (
+    inner
+  );
+}
+
+function FormInput({
+  type = "text",
+  placeholder,
+  value,
+  onChange,
+  required,
+  maxLength,
+}: {
+  type?: string;
+  placeholder: string;
+  value: string;
+  onChange: (v: string) => void;
+  required?: boolean;
+  maxLength?: number;
+}) {
+  return (
+    <input
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      required={required}
+      maxLength={maxLength}
+      className="w-full rounded-full border border-cream/20 bg-transparent px-5 py-3 text-sm text-cream placeholder:text-cream/40 transition focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+    />
+  );
+}
+
+function MapSection() {
+  return (
+    <section className="px-4 py-8">
+      <Reveal y={48}>
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-ink/10 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.35)]">
+          <iframe
+            title="One Retail — Casablanca"
+            src="https://www.google.com/maps?q=409+Rte+d'El+Jadida+Casablanca+20410+Morocco&output=embed"
+            width="100%"
+            height="480"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="block w-full border-0"
+          />
+        </div>
+      </Reveal>
+    </section>
   );
 }

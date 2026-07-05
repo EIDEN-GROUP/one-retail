@@ -17,7 +17,6 @@ export const Route = createFileRoute("/services/beauty")({
       title="La beauté comme langage."
       intro="Flormar et Beauty For You proposent la beauté comme un récit éditorial : textures précises, conseil exigeant, mise en scène généreuse."
       franchises={getByCategory("beauty")}
-      basePath="/services/beauty"
     />
   ),
 });

@@ -3,7 +3,13 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Menu, X, ChevronDown, Globe } from "lucide-react";
+import { EASE } from "@/components/Reveal";
 import logo from "@/assets/one-retail-logo.png";
+
+const navItem = {
+  hidden: { opacity: 0, y: -12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+};
 
 const langs = [
   { code: "fr", label: "FR" },
@@ -52,12 +58,23 @@ export function Navbar() {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-[100] flex justify-center px-4 pt-4 md:pt-6">
       <motion.nav
-        initial={false}
+        initial={{
+          y: -80,
+          opacity: 0,
+          backgroundColor: ghost ? "rgba(0,0,0,0)" : "rgba(245,240,230,0.96)",
+        }}
         animate={{
+          y: 0,
+          opacity: 1,
           backgroundColor: ghost ? "rgba(0,0,0,0)" : "rgba(245,240,230,0.96)",
           boxShadow: ghost ? "0 0 0 0 rgba(26,26,26,0)" : "0 10px 40px -20px rgba(26,26,26,0.30)",
         }}
-        transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+        transition={{
+          duration: 0.35,
+          ease: [0.4, 0, 0.2, 1],
+          y: { duration: 0.8, ease: EASE },
+          opacity: { duration: 0.8, ease: EASE },
+        }}
         className="pointer-events-auto flex w-full max-w-[1180px] items-center justify-between rounded-full px-5 py-3 md:px-8"
       >
         <Link to="/" className="flex items-center gap-2.5">
@@ -69,11 +86,17 @@ export function Navbar() {
           />
         </Link>
 
-        <ul className="hidden items-center gap-1 lg:flex">
+        <motion.ul
+          className="hidden items-center gap-1 lg:flex"
+          initial="hidden"
+          animate="show"
+          variants={{ show: { transition: { staggerChildren: 0.08, delayChildren: 0.25 } } }}
+        >
           {links.map((l) =>
             l.key === "services" ? (
-              <li
+              <motion.li
                 key={l.key}
+                variants={navItem}
                 className="relative"
                 onMouseEnter={() => setServicesOpen(true)}
                 onMouseLeave={() => setServicesOpen(false)}
@@ -107,9 +130,9 @@ export function Navbar() {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </li>
+              </motion.li>
             ) : (
-              <li key={l.key}>
+              <motion.li key={l.key} variants={navItem}>
                 <Link
                   to={l.to}
                   className={`rounded-full px-3 py-2 text-[14px] font-medium transition ${
@@ -124,12 +147,17 @@ export function Navbar() {
                 >
                   {l.label}
                 </Link>
-              </li>
+              </motion.li>
             ),
           )}
-        </ul>
+        </motion.ul>
 
-        <div className="flex items-center gap-2">
+        <motion.div
+          className="flex items-center gap-2"
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: EASE, delay: 0.5 }}
+        >
           <div className="relative">
             <button
               onClick={() => setLangOpen((v) => !v)}
@@ -178,7 +206,7 @@ export function Navbar() {
           >
             <Menu className="h-4 w-4" />
           </button>
-        </div>
+        </motion.div>
       </motion.nav>
 
       <AnimatePresence>

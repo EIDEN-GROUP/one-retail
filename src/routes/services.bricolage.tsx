@@ -17,7 +17,6 @@ export const Route = createFileRoute("/services/bricolage")({
       title="Le geste juste, l'outil juste."
       intro="Mr Bricolage accompagne chaque projet — du plus quotidien au plus ambitieux. Conseil expert, gamme étendue, écosystème complet."
       franchises={getByCategory("bricolage")}
-      basePath="/services/bricolage"
     />
   ),
 });

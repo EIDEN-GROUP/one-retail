@@ -20,6 +20,7 @@ import { Route as ServicesRestaurationRouteImport } from './routes/services.rest
 import { Route as ServicesLifestyleRouteImport } from './routes/services.lifestyle'
 import { Route as ServicesBricolageRouteImport } from './routes/services.bricolage'
 import { Route as ServicesBeautyRouteImport } from './routes/services.beauty'
+import { Route as FranchiseSlugRouteImport } from './routes/franchise_.$slug'
 import { Route as ActualitesSlugRouteImport } from './routes/actualites.$slug'
 import { Route as ServicesRestaurationSlugRouteImport } from './routes/services.restauration.$slug'
 import { Route as ServicesLifestyleSlugRouteImport } from './routes/services.lifestyle.$slug'
@@ -81,6 +82,11 @@ const ServicesBeautyRoute = ServicesBeautyRouteImport.update({
   path: '/services/beauty',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FranchiseSlugRoute = FranchiseSlugRouteImport.update({
+  id: '/franchise_/$slug',
+  path: '/franchise/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ActualitesSlugRoute = ActualitesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -117,6 +123,7 @@ export interface FileRoutesByFullPath {
   '/franchise': typeof FranchiseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/actualites/$slug': typeof ActualitesSlugRoute
+  '/franchise/$slug': typeof FranchiseSlugRoute
   '/services/beauty': typeof ServicesBeautyRouteWithChildren
   '/services/bricolage': typeof ServicesBricolageRouteWithChildren
   '/services/lifestyle': typeof ServicesLifestyleRouteWithChildren
@@ -135,6 +142,7 @@ export interface FileRoutesByTo {
   '/franchise': typeof FranchiseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/actualites/$slug': typeof ActualitesSlugRoute
+  '/franchise/$slug': typeof FranchiseSlugRoute
   '/services/beauty': typeof ServicesBeautyRouteWithChildren
   '/services/bricolage': typeof ServicesBricolageRouteWithChildren
   '/services/lifestyle': typeof ServicesLifestyleRouteWithChildren
@@ -154,6 +162,7 @@ export interface FileRoutesById {
   '/franchise': typeof FranchiseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/actualites/$slug': typeof ActualitesSlugRoute
+  '/franchise_/$slug': typeof FranchiseSlugRoute
   '/services/beauty': typeof ServicesBeautyRouteWithChildren
   '/services/bricolage': typeof ServicesBricolageRouteWithChildren
   '/services/lifestyle': typeof ServicesLifestyleRouteWithChildren
@@ -174,6 +183,7 @@ export interface FileRouteTypes {
     | '/franchise'
     | '/sitemap.xml'
     | '/actualites/$slug'
+    | '/franchise/$slug'
     | '/services/beauty'
     | '/services/bricolage'
     | '/services/lifestyle'
@@ -192,6 +202,7 @@ export interface FileRouteTypes {
     | '/franchise'
     | '/sitemap.xml'
     | '/actualites/$slug'
+    | '/franchise/$slug'
     | '/services/beauty'
     | '/services/bricolage'
     | '/services/lifestyle'
@@ -210,6 +221,7 @@ export interface FileRouteTypes {
     | '/franchise'
     | '/sitemap.xml'
     | '/actualites/$slug'
+    | '/franchise_/$slug'
     | '/services/beauty'
     | '/services/bricolage'
     | '/services/lifestyle'
@@ -228,6 +240,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   FranchiseRoute: typeof FranchiseRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  FranchiseSlugRoute: typeof FranchiseSlugRoute
   ServicesBeautyRoute: typeof ServicesBeautyRouteWithChildren
   ServicesBricolageRoute: typeof ServicesBricolageRouteWithChildren
   ServicesLifestyleRoute: typeof ServicesLifestyleRouteWithChildren
@@ -311,6 +324,13 @@ declare module '@tanstack/react-router' {
       path: '/services/beauty'
       fullPath: '/services/beauty'
       preLoaderRoute: typeof ServicesBeautyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/franchise_/$slug': {
+      id: '/franchise_/$slug'
+      path: '/franchise/$slug'
+      fullPath: '/franchise/$slug'
+      preLoaderRoute: typeof FranchiseSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/actualites/$slug': {
@@ -416,6 +436,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   FranchiseRoute: FranchiseRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  FranchiseSlugRoute: FranchiseSlugRoute,
   ServicesBeautyRoute: ServicesBeautyRouteWithChildren,
   ServicesBricolageRoute: ServicesBricolageRouteWithChildren,
   ServicesLifestyleRoute: ServicesLifestyleRouteWithChildren,
