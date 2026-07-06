@@ -388,7 +388,7 @@ const initPromise = i18n.isInitialized
         fallbackLng: "fr",
         supportedLngs: ["fr", "en", "ar"],
         interpolation: { escapeValue: false },
-        detection: { order: ["localStorage", "navigator"], caches: ["localStorage"] },
+        detection: { order: ["localStorage"], caches: ["localStorage"] },
       });
 
 export { initPromise };
