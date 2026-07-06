@@ -8,7 +8,7 @@ import heroImg from "@/assets/about-casablanca.jpg";
 import qsnImg from "@/assets/Supermarche-aesthetic.jpg";
 import ambitions from "@/assets/ambitions.jpg";
 import president from "@/assets/president-portrait.jpg";
-import hnsLogo from "@/assets/hns-group-logo.png";
+import hnsLogo from "@/assets/brands/hns-group-logo.png";
 import oneRetailLogo from "@/assets/one-retail-logo.png";
 
 export const Route = createFileRoute("/a-propos")({
