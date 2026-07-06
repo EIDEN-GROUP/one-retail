@@ -1051,17 +1051,18 @@ const resources = {
   },
 };
 
-if (!i18n.isInitialized) {
-  i18n
-    .use(LanguageDetector)
-    .use(initReactI18next)
-    .init({
-      resources,
-      fallbackLng: "fr",
-      supportedLngs: ["fr", "en", "ar"],
-      interpolation: { escapeValue: false },
-      detection: { order: ["localStorage", "navigator"], caches: ["localStorage"] },
-    });
-}
+const initPromise = i18n.isInitialized
+  ? Promise.resolve()
+  : i18n
+      .use(LanguageDetector)
+      .use(initReactI18next)
+      .init({
+        resources,
+        fallbackLng: "fr",
+        supportedLngs: ["fr", "en", "ar"],
+        interpolation: { escapeValue: false },
+        detection: { order: ["localStorage"], caches: ["localStorage"] },
+      });
 
+export { initPromise };
 export default i18n;

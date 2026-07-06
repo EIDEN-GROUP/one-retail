@@ -137,7 +137,8 @@ function Home() {
 
 function HeroTitle() {
   const { t } = useTranslation();
-  const words = t("home.hero.words", { returnObjects: true }) as { text: string; brand?: boolean; breakBefore?: boolean }[];
+  const raw = t("home.hero.words", { returnObjects: true });
+  const words = (Array.isArray(raw) ? raw : []) as { text: string; brand?: boolean; breakBefore?: boolean }[];
   return (
     <h1 className="font-display text-[clamp(2rem,8vw,6rem)] leading-[0.95] text-cream">
       {words.map((w, i) => (
@@ -434,7 +435,8 @@ function OurSolution() {
 
 function ValuesSection() {
   const { t } = useTranslation();
-  const values = t("home.values.items", { returnObjects: true }) as { n: string; t: string; d: string }[];
+  const raw = t("home.values.items", { returnObjects: true });
+  const values = (Array.isArray(raw) ? raw : []) as { n: string; t: string; d: string }[];
   return (
     <section id="values" className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 md:py-20">
       <Eyebrow className="mb-6 text-brand sm:mb-8">{t("home.values.eyebrow")}</Eyebrow>
@@ -476,8 +478,10 @@ function ValuesSection() {
 
 function Ambition() {
   const { t } = useTranslation();
-  const ambitionItems = t("home.ambitions.items", { returnObjects: true }) as { n: string; d: string }[];
-  const missionItems = t("home.missions.items", { returnObjects: true }) as { t: string; d: string }[];
+  const rawAmbition = t("home.ambitions.items", { returnObjects: true });
+  const ambitionItems = (Array.isArray(rawAmbition) ? rawAmbition : []) as { n: string; d: string }[];
+  const rawMission = t("home.missions.items", { returnObjects: true });
+  const missionItems = (Array.isArray(rawMission) ? rawMission : []) as { t: string; d: string }[];
   return (
     <section id="ambition" className="relative mx-2 overflow-hidden rounded-2xl sm:mx-4 sm:rounded-[2rem]">
       <motion.img
