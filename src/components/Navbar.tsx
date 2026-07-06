@@ -169,7 +169,7 @@ export function Navbar() {
               aria-label="language"
             >
               <Globe className="h-3.5 w-3.5" />
-              {i18n.language.toUpperCase().slice(0, 2)}
+              {(i18n.language ?? "fr").toUpperCase().slice(0, 2)}
             </button>
             <AnimatePresence>
               {langOpen && (
