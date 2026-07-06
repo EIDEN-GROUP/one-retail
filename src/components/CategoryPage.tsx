@@ -20,11 +20,11 @@ export function CategoryPage({
   const { t } = useTranslation();
   return (
     <main className="grain min-h-screen pt-32">
-      <section className="mx-auto max-w-6xl px-6 pb-16 pt-12 md:pt-20">
+      <section className="mx-auto max-w-6xl px-6 pb-16">
         <Reveal>
           <span className="font-label text-[10px] text-wine-deep">— {eyebrow}</span>
           <h1 className="mt-5 font-display text-5xl leading-[1] md:text-7xl">{title}</h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-soft">{intro}</p>
+          <p className="mt-6 text-base leading-relaxed text-ink-soft">{intro}</p>
         </Reveal>
       </section>
 
@@ -47,9 +47,11 @@ export function CategoryPage({
                   <div className="absolute inset-x-0 bottom-0 p-6 text-pearl md:p-8">
                     <div className="flex items-end justify-between gap-4">
                       <div>
-                        <span className="font-label text-[10px] text-pearl/70">{f.category}</span>
+                        <span className="font-label text-[10px] text-pearl/70">{t(`nav.${f.category}`)}</span>
                         <h3 className="mt-2 font-display text-3xl md:text-4xl">{f.name}</h3>
-                        <p className="mt-2 max-w-sm text-sm text-pearl/75">{f.tagline}</p>
+                        <p className="mt-2 max-w-sm text-sm text-pearl/75">
+                          {t(`franchiseData.${f.slug}.tagline`, { defaultValue: f.tagline })}
+                        </p>
                       </div>
                       <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-pearl/40 transition group-hover:bg-pearl group-hover:text-ink">
                         <ArrowUpRight className="h-4 w-4" />

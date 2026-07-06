@@ -12,11 +12,11 @@ export function FranchiseBanner() {
           <div>
             <span className="font-label text-[10px] text-pearl/60">— {t("nav.franchise")}</span>
             <h2 className="mt-4 font-display text-3xl leading-[1.05] md:text-5xl">
-              Devenir franchisé <span className="italic text-ember/90">One Retail</span>.
+              {t("franchiseBanner.before")}
+              <span className="italic text-ember/90">One Retail</span>
+              {t("franchiseBanner.after")}
             </h2>
-            <p className="mt-4 max-w-md text-sm leading-relaxed text-pearl/70">
-              Un partenariat exigeant, un cadre rigoureux, un accompagnement de bout en bout. Rejoignez un opérateur qui pense le retail dans la durée.
-            </p>
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-pearl/70">{t("franchiseBanner.body")}</p>
           </div>
           <div className="flex md:justify-end">
             <Link to="/franchise">

@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { CategoryPage } from "@/components/CategoryPage";
 import { getByCategory } from "@/lib/franchises";
 
@@ -11,12 +12,17 @@ export const Route = createFileRoute("/services/lifestyle")({
       { property: "og:description", content: "Monoprix et Franprix au Maroc — l'art de vivre quotidien." },
     ],
   }),
-  component: () => (
+  component: LifestylePage,
+});
+
+function LifestylePage() {
+  const { t } = useTranslation();
+  return (
     <CategoryPage
-      eyebrow="Lifestyle"
-      title="L'art de vivre, au quotidien."
-      intro="Deux signatures, une même conviction : la proximité comme service noble. Monoprix et Franprix incarnent un quotidien plus juste, mieux sourcé, mieux raconté."
+      eyebrow={t("services.categories.lifestyle.eyebrow")}
+      title={t("services.categories.lifestyle.title")}
+      intro={t("services.categories.lifestyle.intro")}
       franchises={getByCategory("lifestyle")}
     />
-  ),
-});
+  );
+}

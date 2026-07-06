@@ -21,7 +21,7 @@ import { Route as ServicesLifestyleRouteImport } from './routes/services.lifesty
 import { Route as ServicesBricolageRouteImport } from './routes/services.bricolage'
 import { Route as ServicesBeautyRouteImport } from './routes/services.beauty'
 import { Route as FranchiseSlugRouteImport } from './routes/franchise_.$slug'
-import { Route as ActualitesSlugRouteImport } from './routes/actualites.$slug'
+import { Route as ActualitesSlugRouteImport } from './routes/actualites_.$slug'
 import { Route as ServicesRestaurationSlugRouteImport } from './routes/services.restauration.$slug'
 import { Route as ServicesLifestyleSlugRouteImport } from './routes/services.lifestyle.$slug'
 import { Route as ServicesBricolageSlugRouteImport } from './routes/services.bricolage.$slug'
@@ -88,9 +88,9 @@ const FranchiseSlugRoute = FranchiseSlugRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ActualitesSlugRoute = ActualitesSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => ActualitesRoute,
+  id: '/actualites_/$slug',
+  path: '/actualites/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRestaurationSlugRoute =
   ServicesRestaurationSlugRouteImport.update({
@@ -117,7 +117,7 @@ const ServicesBeautySlugRoute = ServicesBeautySlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
-  '/actualites': typeof ActualitesRouteWithChildren
+  '/actualites': typeof ActualitesRoute
   '/carriere': typeof CarriereRoute
   '/contact': typeof ContactRoute
   '/franchise': typeof FranchiseRoute
@@ -136,7 +136,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
-  '/actualites': typeof ActualitesRouteWithChildren
+  '/actualites': typeof ActualitesRoute
   '/carriere': typeof CarriereRoute
   '/contact': typeof ContactRoute
   '/franchise': typeof FranchiseRoute
@@ -156,12 +156,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
-  '/actualites': typeof ActualitesRouteWithChildren
+  '/actualites': typeof ActualitesRoute
   '/carriere': typeof CarriereRoute
   '/contact': typeof ContactRoute
   '/franchise': typeof FranchiseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/actualites/$slug': typeof ActualitesSlugRoute
+  '/actualites_/$slug': typeof ActualitesSlugRoute
   '/franchise_/$slug': typeof FranchiseSlugRoute
   '/services/beauty': typeof ServicesBeautyRouteWithChildren
   '/services/bricolage': typeof ServicesBricolageRouteWithChildren
@@ -220,7 +220,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/franchise'
     | '/sitemap.xml'
-    | '/actualites/$slug'
+    | '/actualites_/$slug'
     | '/franchise_/$slug'
     | '/services/beauty'
     | '/services/bricolage'
@@ -235,11 +235,12 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AProposRoute: typeof AProposRoute
-  ActualitesRoute: typeof ActualitesRouteWithChildren
+  ActualitesRoute: typeof ActualitesRoute
   CarriereRoute: typeof CarriereRoute
   ContactRoute: typeof ContactRoute
   FranchiseRoute: typeof FranchiseRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ActualitesSlugRoute: typeof ActualitesSlugRoute
   FranchiseSlugRoute: typeof FranchiseSlugRoute
   ServicesBeautyRoute: typeof ServicesBeautyRouteWithChildren
   ServicesBricolageRoute: typeof ServicesBricolageRouteWithChildren
@@ -333,12 +334,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FranchiseSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/actualites/$slug': {
-      id: '/actualites/$slug'
-      path: '/$slug'
+    '/actualites_/$slug': {
+      id: '/actualites_/$slug'
+      path: '/actualites/$slug'
       fullPath: '/actualites/$slug'
       preLoaderRoute: typeof ActualitesSlugRouteImport
-      parentRoute: typeof ActualitesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/services/restauration/$slug': {
       id: '/services/restauration/$slug'
@@ -370,18 +371,6 @@ declare module '@tanstack/react-router' {
     }
   }
 }
-
-interface ActualitesRouteChildren {
-  ActualitesSlugRoute: typeof ActualitesSlugRoute
-}
-
-const ActualitesRouteChildren: ActualitesRouteChildren = {
-  ActualitesSlugRoute: ActualitesSlugRoute,
-}
-
-const ActualitesRouteWithChildren = ActualitesRoute._addFileChildren(
-  ActualitesRouteChildren,
-)
 
 interface ServicesBeautyRouteChildren {
   ServicesBeautySlugRoute: typeof ServicesBeautySlugRoute
@@ -431,11 +420,12 @@ const ServicesRestaurationRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AProposRoute: AProposRoute,
-  ActualitesRoute: ActualitesRouteWithChildren,
+  ActualitesRoute: ActualitesRoute,
   CarriereRoute: CarriereRoute,
   ContactRoute: ContactRoute,
   FranchiseRoute: FranchiseRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ActualitesSlugRoute: ActualitesSlugRoute,
   FranchiseSlugRoute: FranchiseSlugRoute,
   ServicesBeautyRoute: ServicesBeautyRouteWithChildren,
   ServicesBricolageRoute: ServicesBricolageRouteWithChildren,

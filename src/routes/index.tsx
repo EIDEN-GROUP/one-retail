@@ -139,7 +139,7 @@ function HeroTitle() {
   const { t } = useTranslation();
   const words = t("home.hero.words", { returnObjects: true }) as { text: string; brand?: boolean; breakBefore?: boolean }[];
   return (
-    <h1 className="font-display text-[clamp(2rem,8vw,7rem)] leading-[0.95] text-cream">
+    <h1 className="font-display text-[clamp(2rem,8vw,6rem)] leading-[0.95] text-cream">
       {words.map((w, i) => (
         <Fragment key={i}>
           {w.breakBefore && <br className="hidden sm:block" />}
@@ -176,7 +176,7 @@ function Hero() {
         <div className="max-w-5xl">
           <HeroTitle />
           <motion.p
-            className="mt-3 max-w-xl text-sm text-cream/85 sm:mt-4 sm:text-base md:text-lg"
+            className="mt-3 max-w-xl text-[12px] text-cream/85 sm:mt-4 sm:text-base md:text-lg"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE, delay: INTRO + 0.95 }}
@@ -191,13 +191,13 @@ function Hero() {
           >
             <a
               href="#services"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-cream px-5 py-3 text-sm font-semibold text-ink transition hover:bg-brand hover:text-cream sm:px-6 sm:py-3.5"
+              className="group inline-flex items-center justify-center gap-2 rounded-full bg-cream px-5 py-3 text-[12px] md:text-[14px] font-semibold text-ink transition hover:bg-brand hover:text-cream sm:px-6 sm:py-3.5"
             >
               {t("cta.discover")}
               <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
             <Link to="#about"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-cream/40 px-5 py-3 text-sm font-semibold text-cream transition hover:border-cream hover:bg-cream/10 sm:px-6 sm:py-3.5"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-cream/40 px-5 py-3 text-[12px] md:text-[14px] font-semibold text-cream transition hover:border-cream hover:bg-cream/10 sm:px-6 sm:py-3.5"
             >
               {t("cta.about")}
             </Link>
