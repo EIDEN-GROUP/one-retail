@@ -188,7 +188,8 @@ function PresidentSection() {
 
 function AmbitionsMissionsSection() {
   const { t } = useTranslation();
-  const items = t("home.pillars.items", { returnObjects: true }) as { t: string; d: string }[];
+  const rawItems = t("home.pillars.items", { returnObjects: true });
+  const items = (Array.isArray(rawItems) ? rawItems : []) as { t: string; d: string }[];
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["10%", "-10%"]);
@@ -208,14 +209,16 @@ function AmbitionsMissionsSection() {
           </div>
         </div>
 
-        <div className="mt-20 grid gap-8 border-t border-pearl/10 pt-16 sm:grid-cols-2 lg:grid-cols-4">
-          {items.map((it, idx) => (
-            <Reveal key={it.t} delay={idx * 0.06}>
-              <h3 className="font-display text-xl text-pearl">{it.t}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-pearl/60">{it.d}</p>
-            </Reveal>
-          ))}
-        </div>
+        {items.length > 0 && (
+          <div className="mt-20 grid gap-8 border-t border-pearl/10 pt-16 sm:grid-cols-2 lg:grid-cols-4">
+            {items.map((it, idx) => (
+              <Reveal key={it.t} delay={idx * 0.06}>
+                <h3 className="font-display text-xl text-pearl">{it.t}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-pearl/60">{it.d}</p>
+              </Reveal>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
