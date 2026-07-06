@@ -226,7 +226,8 @@ function AmbitionsMissionsSection() {
 
 function ValeursSection() {
   const { t } = useTranslation();
-  const items = t("home.values.items", { returnObjects: true }) as { n: string; t: string; d: string }[];
+  const raw = t("home.values.items", { returnObjects: true });
+  const items = (Array.isArray(raw) ? raw : []) as { n: string; t: string; d: string }[];
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const lineH = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
