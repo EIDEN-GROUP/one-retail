@@ -3,7 +3,8 @@ import { ArrowUpRight, ArrowRight, Sparkles, ChevronLeft, ChevronRight, Check } 
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence, useTransform, useScroll } from "framer-motion";
 import { EASE, VIEWPORT, Reveal, Stagger, StaggerItem, fadeUpItem, staggerContainer } from "@/components/Reveal";
-import { ARTICLES } from "@/lib/articles";
+import { ARTICLES, localizeArticle } from "@/lib/articles";
+import { Ecosystem } from "@/components/Ecosystem";
 import heroOne from "@/assets/hero-oneretail.jpeg";
 import brandFranprix from "@/assets/brands/franprix.png";
 import brandMonoprix from "@/assets/brands/monoprix.png";
@@ -125,6 +126,7 @@ function Home() {
       <Hero />
       <TrustedMarquee />
       <About />
+      <Ecosystem />
       <PresidentQuote />
       <OurSolution />
       <ValuesSection />
@@ -140,7 +142,7 @@ function HeroTitle() {
   const raw = t("home.hero.words", { returnObjects: true });
   const words = (Array.isArray(raw) ? raw : []) as { text: string; brand?: boolean; breakBefore?: boolean }[];
   return (
-    <h1 className="font-display text-[clamp(2rem,8vw,6rem)] leading-[0.95] text-cream">
+    <h1 className="font-display text-[clamp(2rem,8vw,7rem)] leading-[0.95] text-cream">
       {words.map((w, i) => (
         <Fragment key={i}>
           {w.breakBefore && <br className="hidden sm:block" />}
@@ -557,8 +559,8 @@ function Ambition() {
 }
 
 function News() {
-  const items = ARTICLES.slice(0, 3);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const items = ARTICLES.slice(0, 3).map((a) => localizeArticle(a, i18n.language));
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["5%", "-20%"]);

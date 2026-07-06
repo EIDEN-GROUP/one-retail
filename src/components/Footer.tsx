@@ -12,7 +12,7 @@ export function Footer() {
         <div className="grid items-center gap-2">
           <img src={logo} alt="One Retail" className="h-18 w-auto" />
           <p className="text-xs text-[#111111]/50 leading-relaxed tracking-wider font-medium">
-            L’excellence opérationnelle et esthétique au service des franchises de luxe de demain.
+            {t("footer.tagline")}
           </p>
         </div>
         <div>
@@ -46,6 +46,19 @@ export function Footer() {
             <div className="flex items-center gap-2">
               <Mail className="w-4 h-4 text-[#640705] shrink-0" />
               <a href="mailto:contact@oneretail.ma">contact@oneretail.ma</a>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-[#640705] shrink-0" aria-hidden>
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+              </svg>
+              <a
+                href="https://www.linkedin.com/company/one-retail-ma/"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-[#ab2d26] transition-colors"
+              >
+                LinkedIn
+              </a>
             </div>
           </div>
         </div>

@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { EASE, VIEWPORT, Reveal, Stagger, StaggerItem } from "@/components/Reveal";
-import { ARTICLES, FEATURED } from "@/lib/articles";
+import { ARTICLES, FEATURED, localizeArticle, type Article } from "@/lib/articles";
 
 export const Route = createFileRoute("/actualites")({
   head: () => ({
@@ -31,11 +31,19 @@ const INTRO = typeof window !== "undefined" && performance.now() < 1800 ? 1.8 : 
 const ALL = "all";
 
 function NewsPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [cat, setCat] = useState<string>(ALL);
-  const categories = [...new Set(ARTICLES.map((a) => a.category))];
+  const articles = ARTICLES.map((a) => localizeArticle(a, i18n.language));
+  const featured = localizeArticle(FEATURED, i18n.language);
+  const categories = [...new Set(articles.map((a) => a.category))];
   const showFeatured = cat === ALL;
-  const list = cat === ALL ? ARTICLES.slice(1) : ARTICLES.filter((a) => a.category === cat);
+  const list = cat === ALL ? articles.slice(1) : articles.filter((a) => a.category === cat);
+
+  // Category labels are localized, so a stale selection would filter to nothing
+  // after a language switch — reset to "all" whenever the language changes.
+  useEffect(() => {
+    setCat(ALL);
+  }, [i18n.language]);
 
   return (
     <div className="min-h-screen bg-cream text-ink">
@@ -58,7 +66,7 @@ function NewsPage() {
         </Reveal>
       </section>
 
-      {showFeatured && <FeaturedArticle />}
+      {showFeatured && <FeaturedArticle featured={featured} />}
 
       <section className="mx-auto max-w-7xl px-4 pb-24 pt-14 sm:px-6 md:pb-32 md:pt-20">
         <Stagger
@@ -182,7 +190,7 @@ function FilterButton({
   );
 }
 
-function FeaturedArticle() {
+function FeaturedArticle({ featured }: { featured: Article }) {
   const { t } = useTranslation();
   return (
     <section className="mx-auto max-w-7xl px-4 pt-12 sm:px-6 md:pt-16">
@@ -194,15 +202,15 @@ function FeaturedArticle() {
       >
         <Link
           to="/actualites/$slug"
-          params={{ slug: FEATURED.slug }}
+          params={{ slug: featured.slug }}
           className="group block cursor-pointer"
         >
           <div className="md:grid md:grid-cols-12">
             <div className="relative md:col-span-8 md:col-start-1 md:row-start-1">
               <div className="relative aspect-16/10 overflow-hidden rounded-2xl border border-ink/10 bg-white transition-colors duration-500 group-hover:border-brand/25 sm:rounded-3xl">
                 <motion.img
-                  src={FEATURED.image}
-                  alt={FEATURED.title}
+                  src={featured.image}
+                  alt={featured.title}
                   className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                 />
               </div>
@@ -213,13 +221,13 @@ function FeaturedArticle() {
             <div className="relative z-10 -mt-12 px-3 md:col-span-6 md:col-start-7 md:row-start-1 md:mt-0 md:self-center md:px-0">
               <div className="rounded-2xl bg-white p-7 shadow-[0_30px_80px_-40px_rgba(26,26,26,0.4)] sm:p-10 md:p-12">
                 <span className="text-[0.65rem] uppercase tracking-[0.25em] text-brand">
-                  {FEATURED.category} · {FEATURED.date}
+                  {featured.category} · {featured.date}
                 </span>
                 <h2 className="font-display mt-4 text-2xl leading-tight md:text-4xl">
-                  {FEATURED.title}
+                  {featured.title}
                 </h2>
                 <p className="mt-4 text-sm leading-relaxed text-ink/70 line-clamp-4">
-                  {FEATURED.excerpt}
+                  {featured.excerpt}
                 </p>
                 <span className="mt-8 inline-flex items-center gap-2 rounded-full border border-ink/25 px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-ink transition group-hover:border-ink group-hover:bg-ink group-hover:text-cream">
                   {t("cta.readMore")}
