@@ -17,6 +17,7 @@ import brandHS from "@/assets/brands/hns-group-logo.png";
 import heroImg from "@/assets/hero-retail.jpg";
 import presidentImg from "@/assets/president-photo.png";
 import ambitionImg from "@/assets/ambition.jpg";
+import ambitionVideo from "@/assets/ambition.mp4";
 import svcLifestyle from "@/assets/svc-lifestyle.jpg";
 import svcRestauration from "@/assets/svc-restauration.jpg";
 import svcBeauty from "@/assets/svc-beauty.jpg";
@@ -398,9 +399,11 @@ function OurSolution() {
                       i === idx ? "scale-100" : "scale-105 opacity-70"
                     }`}
                   />
-                  <span className="absolute bottom-3 left-3 rounded-full bg-cream/95 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-ink sm:bottom-4 sm:left-4 sm:px-4 sm:py-1.5 sm:text-xs sm:tracking-[0.2em]">
-                    {t(`home.services.${s.key}.label`)}
-                  </span>
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent px-4 pb-5 pt-20 sm:px-6 sm:pb-7 sm:pt-28">
+                    <span className="font-display text-2xl font-bold uppercase tracking-wide text-cream sm:text-3xl md:text-4xl">
+                      {t(`home.services.${s.key}.label`)}
+                    </span>
+                  </div>
                 </Link>
               ))}
             </div>
@@ -486,17 +489,13 @@ function Ambition() {
   const missionItems = (Array.isArray(rawMission) ? rawMission : []) as { t: string; d: string }[];
   return (
     <section id="ambition" className="relative mx-2 overflow-hidden rounded-2xl sm:mx-4 sm:rounded-[2rem]">
-      <motion.img
-        src={ambitionImg}
-        alt="Ambition régionale One Retail"
-        loading="lazy"
-        width={1400}
-        height={900}
+      <video
+        src={ambitionVideo}
+        autoPlay
+        loop
+        muted
+        playsInline
         className="absolute inset-0 h-full w-full object-cover"
-        initial={{ scale: 1.12 }}
-        whileInView={{ scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.8, ease: EASE }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-ink/90 via-ink/80 to-ink/95" />
       <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 md:px-10 md:py-20">
