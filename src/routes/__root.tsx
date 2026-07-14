@@ -57,8 +57,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "One Retail — Opérateur d'enseignes franchisées au Maroc" },
-      { name: "description", content: "One Retail orchestre des enseignes de référence au Maroc — lifestyle, beauté, restauration et bricolage." },
+      { title: "One Retail   Opérateur d'enseignes franchisées au Maroc" },
+      { name: "description", content: "One Retail orchestre des enseignes de référence au Maroc   lifestyle, beauté, restauration et bricolage." },
       { name: "author", content: "One Retail" },
       { property: "og:title", content: "One Retail" },
       { property: "og:description", content: "Opérateur marocain d'enseignes franchisées de premier plan." },

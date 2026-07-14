@@ -7,9 +7,9 @@ export const Route = createFileRoute("/services/beauty")({
   head: () => ({
     meta: [
       { title: "Beauty | One Retail" },
-      { name: "description", content: "Flormar et Beauty For You — la beauté éditoriale au Maroc, signée One Retail." },
+      { name: "description", content: "Flormar et Beauty For You   la beauté éditoriale au Maroc, signée One Retail." },
       { property: "og:title", content: "Beauty | One Retail" },
-      { property: "og:description", content: "Flormar et Beauty For You — la beauté éditoriale au Maroc." },
+      { property: "og:description", content: "Flormar et Beauty For You   la beauté éditoriale au Maroc." },
     ],
   }),
   component: BeautyPage,

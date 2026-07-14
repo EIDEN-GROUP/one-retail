@@ -13,7 +13,7 @@ import kayaLogo from "@/assets/brands/kaya.png";
 import chariLogo from "@/assets/brands/logo (1).png";
 import oneRetailLogo from "@/assets/one-retail-logo.png";
 
-/* ── Data — exact hierarchy from the H&S organigram ─────────── */
+/* ── Data   exact hierarchy from the H&S organigram ─────────── */
 
 type NodeSize = "hs" | "md" | "hero" | "sm";
 
@@ -25,7 +25,7 @@ type Entity = {
   /** center position as a percentage of the stage (desktop layout) */
   x: number;
   y: number;
-  /** logo asset is white — render on a dark card so it stays visible */
+  /** logo asset is white   render on a dark card so it stays visible */
   dark?: boolean;
 };
 
@@ -347,7 +347,7 @@ function MobileEcosystem() {
 
       <div className="mx-auto h-6 w-px bg-ink/15" />
 
-      {/* One Retail — emphasized */}
+      {/* One Retail   emphasized */}
       <MobileCard e={oneRetail} expandable expanded={open === "one-retail"} onTap={() => toggle("one-retail")} />
       <AnimatePresence initial={false}>
         {open === "one-retail" && (

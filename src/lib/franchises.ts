@@ -201,7 +201,7 @@ export const FRANCHISES: Franchise[] = [
     name: "Mr Bricolage",
     tagline: "Le geste juste, l'outil juste.",
     story:
-      "Enseigne historique du bricolage, Mr Bricolage accompagne chaque projet — du plus quotidien au plus ambitieux. Conseil expert, gamme étendue, écosystème complet.",
+      "Enseigne historique du bricolage, Mr Bricolage accompagne chaque projet   du plus quotidien au plus ambitieux. Conseil expert, gamme étendue, écosystème complet.",
     arrival: "Disponible",
     image: mrbricolage,
     gallery: [mrbricolage, heroBricolage, svcBricolage, bricolageShot, heroRetail, supermarcheAesthetic],

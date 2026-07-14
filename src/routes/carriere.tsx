@@ -446,7 +446,7 @@ function ApplicationFormImpl(
                       <option value={SPONTANEOUS} className="bg-ink">{t("careersPage.spontaneous")}</option>
                       {jobs.map((j) => (
                         <option key={j.title} value={j.title} className="bg-ink">
-                          {j.title} — {j.brand}
+                          {j.title}   {j.brand}
                         </option>
                       ))}
                     </select>

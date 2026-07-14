@@ -15,7 +15,7 @@ export const Route = createFileRoute("/actualites_/$slug")({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.title} — One Retail` },
+          { title: `${loaderData.title}   One Retail` },
           { name: "description", content: loaderData.excerpt },
           { property: "og:title", content: loaderData.title },
           { property: "og:description", content: loaderData.excerpt },
@@ -67,7 +67,7 @@ function ArticlePage() {
         style={{ scaleX: pageScroll }}
       />
 
-      {/* ── Hero (rounded card — site-wide style) ─────────────── */}
+      {/* ── Hero (rounded card   site-wide style) ─────────────── */}
       <section className="relative mx-2 mt-2 overflow-hidden rounded-2xl bg-ink text-cream sm:mx-4 sm:mt-4 sm:rounded-[2rem]">
         <motion.img
           src={a.image}
@@ -119,7 +119,7 @@ function ArticlePage() {
               <span className="h-px w-8 bg-brand" />
             </motion.div>
 
-            {/* Title — per-word blur-in */}
+            {/* Title   per-word blur-in */}
             <h1 className="mt-6 font-display text-[clamp(2.25rem,5.5vw,4.75rem)] leading-[1.03] text-cream">
               {a.title.split(" ").map((w, i) => (
                 <Fragment key={i}>
@@ -165,7 +165,7 @@ function ArticlePage() {
             <div className="sticky top-10 space-y-10 pt-16 md:top-28 md:pt-24">
               {/* Share */}
               <Reveal>
-                <p className="mb-4 font-label text-[10px] text-wine-deep">— {t("article.share")}</p>
+                <p className="mb-4 font-label text-[10px] text-wine-deep">  {t("article.share")}</p>
                 <div className="flex flex-col gap-2">
                   <ShareButton
                     href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(a.title)}`}
@@ -199,13 +199,13 @@ function ArticlePage() {
 
               {/* Category tag */}
               <Reveal delay={0.06}>
-                <p className="mb-3 font-label text-[10px] text-wine-deep">— {t("article.category")}</p>
+                <p className="mb-3 font-label text-[10px] text-wine-deep">  {t("article.category")}</p>
                 <span className="chip">{a.category}</span>
               </Reveal>
 
               {/* Date */}
               <Reveal delay={0.12}>
-                <p className="mb-1 font-label text-[10px] text-wine-deep">— {t("article.publishedOn")}</p>
+                <p className="mb-1 font-label text-[10px] text-wine-deep">  {t("article.publishedOn")}</p>
                 <p className="font-display text-lg text-ink">{a.date}</p>
               </Reveal>
             </div>
@@ -221,7 +221,7 @@ function ArticlePage() {
         <section className="border-t border-ink/10 bg-pearl-deep/30">
           <div className="mx-auto max-w-5xl px-5 py-16 sm:px-8 md:py-24">
             <Reveal>
-              <p className="font-label text-[10px] text-wine-deep">— {t("article.readNext")}</p>
+              <p className="font-label text-[10px] text-wine-deep">  {t("article.readNext")}</p>
               <h3 className="mt-3 font-display text-3xl md:text-5xl">{t("article.otherNews")}</h3>
             </Reveal>
 
@@ -463,7 +463,7 @@ function CommentForm() {
 
       <div className="relative z-10 mx-auto max-w-3xl px-5 py-16 sm:px-8 md:py-24">
         <Reveal>
-          <p className="font-label text-[10px] text-ember">— {t("article.comment.eyebrow")}</p>
+          <p className="font-label text-[10px] text-ember">  {t("article.comment.eyebrow")}</p>
           <h3 className="mt-4 font-display text-3xl text-pearl md:text-5xl">
             {t("article.comment.title")}
           </h3>

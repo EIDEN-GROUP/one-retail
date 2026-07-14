@@ -245,7 +245,7 @@ function GallerySection() {
               >
                 <img
                   src={g}
-                  alt={`${f.name} — visuel ${i + 1}`}
+                  alt={`${f.name}   visuel ${i + 1}`}
                   loading="lazy"
                   className="h-full w-full object-cover transition duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                 />
@@ -368,7 +368,7 @@ function GalleryLightbox({
               <motion.img
                 key={active}
                 src={images[active!]}
-                alt={`${name} — visuel ${active! + 1}`}
+                alt={`${name}   visuel ${active! + 1}`}
                 custom={dir}
                 variants={slideVariants}
                 initial="enter"

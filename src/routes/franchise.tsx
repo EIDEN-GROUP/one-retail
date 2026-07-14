@@ -5,6 +5,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   Check,
+  Clock,
   CreditCard,
   Database,
   Mail,
@@ -35,13 +36,13 @@ import brandDahab from "@/assets/brands/dahab.png";
 export const Route = createFileRoute("/franchise")({
   head: () => ({
     meta: [
-      { title: "Devenir franchisé — One Retail" },
+      { title: "Devenir franchisé | One Retail" },
       {
         name: "description",
         content:
           "Investissez dans le futur du retail au Maroc. Premier écosystème retail franchisé multi-enseignes : une fenêtre d'opportunité unique 2026–2030.",
       },
-      { property: "og:title", content: "Devenir franchisé — One Retail" },
+      { property: "og:title", content: "Devenir franchisé | One Retail" },
       {
         property: "og:description",
         content: "Premier écosystème retail franchisé multi-enseignes au Maroc.",
@@ -514,17 +515,48 @@ function SupportProgram() {
   );
 }
 
+const STEP_KEYS = ["project", "profile", "contact"] as const;
+
 function ApplySection() {
   const { t } = useTranslation();
-  const [form, setForm] = useState({ name: "", email: "", phone: "", city: "", brand: "", message: "" });
+  const [step, setStep] = useState(0);
   const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({
+    brands: [] as string[],
+    timing: "",
+    experience: "",
+    years: "",
+    capacity: "",
+    local: "",
+    name: "",
+    city: "",
+    phone: "",
+    email: "",
+    message: "",
+  });
+
+  const set = (patch: Partial<typeof form>) => setForm((f) => ({ ...f, ...patch }));
+  const toggleBrand = (v: string) =>
+    setForm((f) => ({
+      ...f,
+      brands: f.brands.includes(v) ? f.brands.filter((b) => b !== v) : [...f.brands, v],
+    }));
+
+  const isLast = step === STEP_KEYS.length - 1;
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isLast) {
+      setStep((s) => Math.min(s + 1, STEP_KEYS.length - 1));
+      return;
+    }
     setSent(true);
     setTimeout(() => setSent(false), 4500);
-    setForm({ name: "", email: "", phone: "", city: "", brand: "", message: "" });
+    setForm({ brands: [], timing: "", experience: "", years: "", capacity: "", local: "", name: "", city: "", phone: "", email: "", message: "" });
+    setStep(0);
   };
+
+  const arr = (key: string) => t(`joinFranchise.apply.${key}`, { returnObjects: true }) as string[];
 
   return (
     <section id="candidater" className="px-4 py-20 md:py-28">
@@ -553,105 +585,228 @@ function ApplySection() {
               </Eyebrow>
               <h2 className="font-display text-4xl leading-[1.05] text-cream md:text-5xl">{t("joinFranchise.apply.title")}</h2>
               <p className="mt-4 max-w-md text-sm leading-relaxed text-cream/70">{t("joinFranchise.apply.sub")}</p>
+              <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-cream/15 px-4 py-1.5 text-xs text-cream/70">
+                <Clock className="h-3.5 w-3.5 text-brand" /> {t("joinFranchise.apply.duration")}
+              </div>
             </div>
             <div className="relative mt-10 space-y-5 border-t border-cream/15 pt-8">
-              <div>
+              {/* <div>
                 <div className="text-sm font-semibold text-cream">Ryad Bendouro</div>
                 <div className="text-xs text-cream/60">{t("joinFranchise.apply.contactRole")}</div>
-              </div>
-              <a href="mailto:r.bendouro@oneretail.ma" className="flex items-center gap-3 text-sm text-cream/80 transition hover:text-cream">
-                <Mail className="h-4 w-4 text-brand" /> r.bendouro@oneretail.ma
+              </div> */}
+              <a href="mailto:contact@oneretail.ma" className="flex items-center gap-3 text-sm text-cream/80 transition hover:text-cream">
+                <Mail className="h-4 w-4 shrink-0 text-brand" /> contact@oneretail.ma
               </a>
               <a href="tel:+212520400731" className="flex items-center gap-3 text-sm text-cream/80 transition hover:text-cream">
-                <Phone className="h-4 w-4 text-brand" /> 05 20 40 07 31
+                <Phone className="h-4 w-4 shrink-0 text-brand" /> 05 20 40 07 31
               </a>
               <div className="flex items-center gap-3 text-sm text-cream/80">
-                <MapPin className="h-4 w-4 text-brand" /> 409 route d'Eljadida, Casablanca 20232
+                <MapPin className="h-4 w-4 shrink-0 text-brand" /> 409 route d'Eljadida, Casablanca 20232
               </div>
             </div>
           </motion.div>
 
           <motion.div
-            className="border-t border-cream/10 p-6 sm:p-8 md:col-span-7 md:border-l md:border-t-0 md:p-12 lg:p-14"
+            className="flex flex-col border-t border-cream/10 p-6 sm:p-8 md:col-span-7 md:border-l md:border-t-0 md:p-12 lg:p-14"
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={VIEWPORT}
             transition={{ duration: 0.8, ease: EASE }}
           >
-            <Stagger className="space-y-4" delay={0.2} stagger={0.08}>
-              <form onSubmit={onSubmit} className="contents">
-                <StaggerItem>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <FieldInput placeholder={t("joinFranchise.apply.form.name")} value={form.name} onChange={(v) => setForm({ ...form, name: v })} required maxLength={120} />
-                    <FieldInput type="email" placeholder={t("joinFranchise.apply.form.email")} value={form.email} onChange={(v) => setForm({ ...form, email: v })} required maxLength={255} />
-                  </div>
-                </StaggerItem>
-                <StaggerItem>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <FieldInput type="tel" placeholder={t("joinFranchise.apply.form.phone")} value={form.phone} onChange={(v) => setForm({ ...form, phone: v })} required maxLength={40} />
-                    <FieldInput placeholder={t("joinFranchise.apply.form.city")} value={form.city} onChange={(v) => setForm({ ...form, city: v })} maxLength={80} />
-                  </div>
-                </StaggerItem>
-                <StaggerItem>
-                  <div>
-                    <label className="block text-[0.7rem] uppercase tracking-[0.25em] text-cream/50">{t("joinFranchise.apply.form.brandLabel")}</label>
-                    <select
-                      value={form.brand}
-                      onChange={(e) => setForm({ ...form, brand: e.target.value })}
-                      className="mt-2 w-full rounded-full border border-cream/20 bg-transparent px-5 py-3 text-sm text-cream focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+            {/* Step tabs */}
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-2">
+              {STEP_KEYS.map((key, i) => {
+                const active = i === step;
+                const done = i < step;
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setStep(i)}
+                    className={`flex flex-1 items-center gap-2.5 rounded-full border px-4 py-2.5 text-left transition ${
+                      active ? "border-brand bg-brand/10" : done ? "border-cream/25" : "border-cream/10"
+                    }`}
+                  >
+                    <span
+                      className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[0.7rem] font-semibold ${
+                        active ? "bg-brand text-cream" : done ? "bg-cream/20 text-cream" : "bg-cream/10 text-cream/50"
+                      }`}
                     >
-                      <option value="" className="bg-ink">{t("joinFranchise.apply.form.brandDefault")}</option>
-                      {FRANCHISES.map((f) => (
-                        <option key={f.slug} value={f.name} className="bg-ink">
-                          {f.name}
-                        </option>
-                      ))}
-                      <option value="Franchise Card" className="bg-ink">{t("joinFranchise.apply.form.brandMulti")}</option>
-                    </select>
-                  </div>
-                </StaggerItem>
-                <StaggerItem>
-                  <textarea
-                    placeholder={t("joinFranchise.apply.form.message")}
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    required
-                    maxLength={1500}
-                    rows={5}
-                    className="w-full resize-none rounded-xl border border-cream/20 bg-transparent px-4 py-3 text-sm text-cream placeholder:text-cream/40 transition focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
-                  />
-                </StaggerItem>
-                <StaggerItem>
-                  <div className="flex flex-wrap items-center gap-4 pt-2">
-                    <button
-                      type="submit"
-                      className="group inline-flex items-center gap-2 rounded-full bg-brand px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.2em] text-cream transition hover:bg-brand-deep"
-                    >
-                      {t("joinFranchise.apply.form.submit")}
-                      <Send className="h-4 w-4 transition group-hover:translate-x-0.5" />
-                    </button>
-                    {sent && (
-                      <motion.p
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="text-xs text-brand"
-                      >
-                        {t("joinFranchise.apply.form.sent")}
-                      </motion.p>
-                    )}
-                  </div>
-                </StaggerItem>
-              </form>
-            </Stagger>
+                      {done ? <Check className="h-3.5 w-3.5" /> : String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className={`truncate text-xs font-medium ${active ? "text-cream" : "text-cream/60"}`}>
+                      {t(`joinFranchise.apply.steps.${key}`)}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="mt-4 text-[0.7rem] uppercase tracking-[0.25em] text-cream/40">
+              {t("joinFranchise.apply.stepLabel")} {step + 1} / {STEP_KEYS.length}
+            </div>
+
+            <form onSubmit={onSubmit} className="mt-6 flex flex-1 flex-col">
+              <motion.div
+                key={step}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, ease: EASE }}
+                className="flex-1 space-y-8"
+              >
+                {step === 0 && (
+                  <>
+                    <ChipQuestion
+                      label={t("joinFranchise.apply.project.brandsQ")}
+                      options={arr("project.brands")}
+                      selected={form.brands}
+                      onToggle={toggleBrand}
+                    />
+                    <ChipQuestion
+                      label={t("joinFranchise.apply.project.timingQ")}
+                      options={arr("project.timing")}
+                      selected={form.timing ? [form.timing] : []}
+                      onToggle={(v) => set({ timing: v })}
+                    />
+                  </>
+                )}
+
+                {step === 1 && (
+                  <>
+                    <p className="text-sm leading-relaxed text-cream/60">{t("joinFranchise.apply.profile.intro")}</p>
+                    <ChipQuestion
+                      label={t("joinFranchise.apply.profile.experienceQ")}
+                      options={arr("profile.experience")}
+                      selected={form.experience ? [form.experience] : []}
+                      onToggle={(v) => set({ experience: v })}
+                    />
+                    <ChipQuestion
+                      label={t("joinFranchise.apply.profile.yearsQ")}
+                      options={arr("profile.years")}
+                      selected={form.years ? [form.years] : []}
+                      onToggle={(v) => set({ years: v })}
+                    />
+                    <ChipQuestion
+                      label={t("joinFranchise.apply.profile.capacityQ")}
+                      hint={t("joinFranchise.apply.profile.capacityHint")}
+                      options={arr("profile.capacity")}
+                      selected={form.capacity ? [form.capacity] : []}
+                      onToggle={(v) => set({ capacity: v })}
+                    />
+                    <ChipQuestion
+                      label={t("joinFranchise.apply.profile.localQ")}
+                      options={arr("profile.local")}
+                      selected={form.local ? [form.local] : []}
+                      onToggle={(v) => set({ local: v })}
+                    />
+                  </>
+                )}
+
+                {step === 2 && (
+                  <>
+                    <p className="text-sm leading-relaxed text-cream/60">{t("joinFranchise.apply.contact.intro")}</p>
+                    <div className="grid gap-5 sm:grid-cols-2">
+                      <Field label={t("joinFranchise.apply.contact.name")} placeholder={t("joinFranchise.apply.contact.namePh")} value={form.name} onChange={(v) => set({ name: v })} required maxLength={120} />
+                      <Field label={t("joinFranchise.apply.contact.city")} placeholder={t("joinFranchise.apply.contact.cityPh")} value={form.city} onChange={(v) => set({ city: v })} maxLength={80} />
+                      <Field type="tel" label={t("joinFranchise.apply.contact.phone")} placeholder={t("joinFranchise.apply.contact.phonePh")} value={form.phone} onChange={(v) => set({ phone: v })} required maxLength={40} />
+                      <Field type="email" label={t("joinFranchise.apply.contact.email")} placeholder={t("joinFranchise.apply.contact.emailPh")} value={form.email} onChange={(v) => set({ email: v })} required maxLength={255} />
+                    </div>
+                    <div>
+                      <label className="block text-[0.7rem] uppercase tracking-[0.2em] text-cream/50">{t("joinFranchise.apply.contact.message")}</label>
+                      <textarea
+                        placeholder={t("joinFranchise.apply.contact.messagePh")}
+                        value={form.message}
+                        onChange={(e) => set({ message: e.target.value })}
+                        maxLength={1500}
+                        rows={4}
+                        className="mt-2 w-full resize-none rounded-xl border border-cream/20 bg-transparent px-4 py-3 text-sm text-cream placeholder:text-cream/40 transition focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+                      />
+                    </div>
+                    <p className="text-xs leading-relaxed text-cream/40">{t("joinFranchise.apply.privacy")}</p>
+                  </>
+                )}
+              </motion.div>
+
+              {/* Navigation */}
+              <div className="mt-10 flex flex-wrap items-center gap-4 border-t border-cream/10 pt-6">
+                {step > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setStep((s) => Math.max(s - 1, 0))}
+                    className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.2em] text-cream/80 transition hover:border-cream/40 hover:text-cream"
+                  >
+                    <ArrowRight className="h-4 w-4 rotate-180" /> {t("joinFranchise.apply.back")}
+                  </button>
+                )}
+                <button
+                  type="submit"
+                  className="group inline-flex items-center gap-2 rounded-full bg-brand px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.2em] text-cream transition hover:bg-brand-deep"
+                >
+                  {isLast ? t("joinFranchise.apply.submit") : t("joinFranchise.apply.next")}
+                  {isLast ? (
+                    <Send className="h-4 w-4 transition group-hover:translate-x-0.5" />
+                  ) : (
+                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+                  )}
+                </button>
+                {sent && (
+                  <motion.p initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} className="text-xs text-brand">
+                    {t("joinFranchise.apply.sent")}
+                  </motion.p>
+                )}
+              </div>
+            </form>
           </motion.div>
         </div>
       </motion.div>
+
+      <p className="mx-auto mt-8 max-w-7xl text-center text-xs text-ink/50">{t("joinFranchise.apply.footer")}</p>
     </section>
   );
 }
 
-function FieldInput({
+function ChipQuestion({
+  label,
+  hint,
+  options,
+  selected,
+  onToggle,
+}: {
+  label: string;
+  hint?: string;
+  options: string[];
+  selected: string[];
+  onToggle: (v: string) => void;
+}) {
+  return (
+    <div>
+      <label className="block text-sm font-medium text-cream">{label}</label>
+      {hint && <p className="mt-1 text-xs text-cream/45">{hint}</p>}
+      <div className="mt-3 flex flex-wrap gap-2.5">
+        {options.map((opt) => {
+          const active = selected.includes(opt);
+          return (
+            <button
+              key={opt}
+              type="button"
+              aria-pressed={active}
+              onClick={() => onToggle(opt)}
+              className={`rounded-full border px-4 py-2 text-sm transition ${
+                active ? "border-brand bg-brand/10 text-cream" : "border-cream/20 text-cream/70 hover:border-cream/40 hover:text-cream"
+              }`}
+            >
+              {opt}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function Field({
   type = "text",
+  label,
   placeholder,
   value,
   onChange,
@@ -659,6 +814,7 @@ function FieldInput({
   maxLength,
 }: {
   type?: string;
+  label: string;
   placeholder: string;
   value: string;
   onChange: (v: string) => void;
@@ -666,14 +822,17 @@ function FieldInput({
   maxLength?: number;
 }) {
   return (
-    <input
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      required={required}
-      maxLength={maxLength}
-      className="w-full rounded-full border border-cream/20 bg-transparent px-5 py-3 text-sm text-cream placeholder:text-cream/40 transition focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
-    />
+    <div>
+      <label className="block text-[0.7rem] uppercase tracking-[0.2em] text-cream/50">{label}</label>
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        required={required}
+        maxLength={maxLength}
+        className="mt-2 w-full rounded-full border border-cream/20 bg-transparent px-5 py-3 text-sm text-cream placeholder:text-cream/40 transition focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand"
+      />
+    </div>
   );
 }

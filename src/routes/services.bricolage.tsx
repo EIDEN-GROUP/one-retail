@@ -7,9 +7,9 @@ export const Route = createFileRoute("/services/bricolage")({
   head: () => ({
     meta: [
       { title: "Bricolage | One Retail" },
-      { name: "description", content: "Mr Bricolage au Maroc — l'écosystème complet du bricolage signé One Retail." },
+      { name: "description", content: "Mr Bricolage au Maroc   l'écosystème complet du bricolage signé One Retail." },
       { property: "og:title", content: "Bricolage | One Retail" },
-      { property: "og:description", content: "Mr Bricolage au Maroc — l'écosystème complet du bricolage." },
+      { property: "og:description", content: "Mr Bricolage au Maroc   l'écosystème complet du bricolage." },
     ],
   }),
   component: BricolagePage,

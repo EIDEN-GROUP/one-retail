@@ -329,7 +329,7 @@ function MapSection() {
       <Reveal y={48}>
         <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-ink/10 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.35)]">
           <iframe
-            title="One Retail — Casablanca"
+            title="One Retail   Casablanca"
             src="https://www.google.com/maps?q=409+Rte+d'El+Jadida+Casablanca+20410+Morocco&output=embed"
             width="100%"
             height="480"

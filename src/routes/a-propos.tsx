@@ -14,10 +14,10 @@ import oneRetailLogo from "@/assets/one-retail-logo.png";
 export const Route = createFileRoute("/a-propos")({
   head: () => ({
     meta: [
-      { title: "À propos — One Retail" },
-      { name: "description", content: "Qui sommes-nous, notre organigramme, le mot du président, nos ambitions et nos valeurs — découvrez One Retail." },
-      { property: "og:title", content: "À propos — One Retail" },
-      { property: "og:description", content: "Quatre univers, une exigence — découvrez One Retail." },
+      { title: "À propos   One Retail" },
+      { name: "description", content: "Qui sommes-nous, notre organigramme, le mot du président, nos ambitions et nos valeurs   découvrez One Retail." },
+      { property: "og:title", content: "À propos   One Retail" },
+      { property: "og:description", content: "Quatre univers, une exigence   découvrez One Retail." },
       { property: "og:image", content: heroImg },
     ],
   }),
@@ -44,12 +44,12 @@ function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/30 to-ink/80" />
       <div className="relative z-10 mx-auto flex h-full max-w-6xl flex-col justify-end px-6 pb-16 pt-40">
         <Reveal>
-          <span className="font-label text-[10px] text-pearl/70">— À propos</span>
+          <span className="font-label text-[10px] text-pearl/70">  À propos</span>
           <h1 className="mt-5 font-display text-5xl leading-[0.95] md:text-8xl">
             One Retail, l'art de la <span className="italic text-pearl/80">distribution</span>.
           </h1>
           <p className="mt-6 max-w-xl text-base text-pearl/75 md:text-lg">
-            Une filiale de H&S Group qui orchestre des enseignes de référence au Maroc — lifestyle, beauté, restauration et bricolage.
+            Une filiale de H&S Group qui orchestre des enseignes de référence au Maroc   lifestyle, beauté, restauration et bricolage.
           </p>
         </Reveal>
       </div>
@@ -67,7 +67,7 @@ function QuiSommesNousSection() {
       <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-[1fr_1.1fr] md:gap-20">
         <div className="flex flex-col justify-center">
           <Reveal>
-            <span className="font-label text-[10px] text-wine-deep">— {t("home.about.eyebrow")}</span>
+            <span className="font-label text-[10px] text-wine-deep">  {t("home.about.eyebrow")}</span>
             <h2 className="mt-5 whitespace-pre-line font-display text-4xl leading-tight md:text-6xl">
               {t("home.about.title")}
             </h2>
@@ -87,7 +87,7 @@ function OrganigramSection() {
     <section className="border-y border-ink/10 bg-pearl-deep/30 px-6 py-28 md:py-40">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <span className="font-label text-[10px] text-wine-deep">— Organigramme</span>
+          <span className="font-label text-[10px] text-wine-deep">  Organigramme</span>
           <h2 className="mt-5 max-w-2xl font-display text-4xl leading-tight md:text-6xl">Une structure claire, un cap commun.</h2>
         </Reveal>
 
@@ -148,7 +148,7 @@ function PresidentSection() {
       <div className="mx-auto max-w-5xl">
         <div className="mb-20 flex flex-col justify-center">
           <Reveal>
-            <span className="font-label text-[10px] text-wine-deep">— {t("home.president.eyebrow")}</span>
+            <span className="font-label text-[10px] text-wine-deep">  {t("home.president.eyebrow")}</span>
             <h2 className="mt-5 font-display text-4xl leading-tight md:text-6xl">{t("home.president.sectionTitle")}</h2>
           </Reveal>
         </div>
@@ -199,7 +199,7 @@ function AmbitionsMissionsSection() {
         <div className="grid items-center gap-12 md:grid-cols-[1.1fr_1fr] md:gap-20">
           <div>
             <Reveal>
-              <span className="font-label text-[10px] text-ember">— {t("home.ambitions.eyebrow")}</span>
+              <span className="font-label text-[10px] text-ember">  {t("home.ambitions.eyebrow")}</span>
               <h2 className="mt-5 font-display text-4xl leading-tight md:text-6xl">{t("home.ambitions.title")}</h2>
               <p className="mt-6 max-w-lg text-base leading-relaxed text-pearl/70">{t("home.ambitions.body")}</p>
             </Reveal>
@@ -236,7 +236,7 @@ function ValeursSection() {
     <section ref={ref} className="relative px-6 py-28 md:py-40">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <span className="font-label text-[10px] text-wine-deep">— {t("home.values.eyebrow")}</span>
+          <span className="font-label text-[10px] text-wine-deep">  {t("home.values.eyebrow")}</span>
           <h2 className="mt-5 max-w-2xl font-display text-4xl leading-tight md:text-6xl">{t("home.values.title")}</h2>
         </Reveal>
         <div className="relative mt-20 grid gap-16 md:grid-cols-[120px_1fr]">

@@ -10,7 +10,7 @@ export function FranchiseBanner() {
       <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-ink/10 bg-ink text-pearl grain">
         <div className="grid items-center gap-8 p-10 md:grid-cols-[1.4fr_1fr] md:p-16">
           <div>
-            <span className="font-label text-[10px] text-pearl/60">— {t("nav.franchise")}</span>
+            <span className="font-label text-[10px] text-pearl/60">  {t("nav.franchise")}</span>
             <h2 className="mt-4 font-display text-3xl leading-[1.05] md:text-5xl">
               {t("franchiseBanner.before")}
               <span className="italic text-ember/90">One Retail</span>

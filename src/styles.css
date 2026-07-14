@@ -102,12 +102,12 @@
 
   ::selection { background: var(--wine-deep); color: var(--pearl); }
 
-  /* Scrollbar — Firefox (only where ::-webkit-scrollbar is unsupported) */
+  /* Scrollbar   Firefox (only where ::-webkit-scrollbar is unsupported) */
   @supports not selector(::-webkit-scrollbar) {
     html { scrollbar-width: thin; scrollbar-color: var(--wine) var(--pearl-deep); }
   }
 
-  /* Scrollbar — WebKit (Chrome, Edge, Safari) */
+  /* Scrollbar   WebKit (Chrome, Edge, Safari) */
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: var(--pearl-deep); }
   ::-webkit-scrollbar-thumb {

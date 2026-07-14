@@ -32,7 +32,7 @@ export function FranchiseSingle({ franchise, backTo, backLabel }: { franchise: F
 
       <section className="mx-auto grid max-w-6xl gap-12 px-6 py-24 md:grid-cols-[1.3fr_1fr] md:py-32">
         <Reveal>
-          <span className="font-label text-[10px] text-wine-deep">— L'enseigne</span>
+          <span className="font-label text-[10px] text-wine-deep">  L'enseigne</span>
           <h2 className="mt-4 font-display text-3xl leading-tight md:text-5xl">{franchise.tagline}</h2>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-soft">{franchise.story}</p>
         </Reveal>
@@ -53,7 +53,7 @@ export function FranchiseSingle({ franchise, backTo, backLabel }: { franchise: F
 
       <section className="mx-auto max-w-6xl px-6">
         <Reveal>
-          <span className="font-label text-[10px] text-wine-deep">— Galerie</span>
+          <span className="font-label text-[10px] text-wine-deep">  Galerie</span>
           <h3 className="mt-4 font-display text-3xl md:text-4xl">L'expérience en images.</h3>
         </Reveal>
         <div className="mt-10 grid gap-4 md:grid-cols-3">

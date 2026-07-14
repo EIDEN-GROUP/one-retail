@@ -15,7 +15,7 @@ export const Route = createFileRoute("/actualites")({
         content:
           "Toute l'actualité de One Retail et de ses enseignes : acquisitions, événements et nouveautés.",
       },
-      { property: "og:title", content: "Actualités — One Retail" },
+      { property: "og:title", content: "Actualités   One Retail" },
       {
         property: "og:description",
         content: "Toute l'actualité de One Retail et de ses enseignes.",
@@ -40,7 +40,7 @@ function NewsPage() {
   const list = cat === ALL ? articles.slice(1) : articles.filter((a) => a.category === cat);
 
   // Category labels are localized, so a stale selection would filter to nothing
-  // after a language switch — reset to "all" whenever the language changes.
+  // after a language switch   reset to "all" whenever the language changes.
   useEffect(() => {
     setCat(ALL);
   }, [i18n.language]);

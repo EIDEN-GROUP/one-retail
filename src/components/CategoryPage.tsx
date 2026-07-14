@@ -22,7 +22,7 @@ export function CategoryPage({
     <main className="grain min-h-screen pt-32">
       <section className="mx-auto max-w-6xl px-6 pb-16">
         <Reveal>
-          <span className="font-label text-[10px] text-wine-deep">— {eyebrow}</span>
+          <span className="font-label text-[10px] text-wine-deep">  {eyebrow}</span>
           <h1 className="mt-5 font-display text-5xl leading-[1] md:text-7xl">{title}</h1>
           <p className="mt-6 text-base leading-relaxed text-ink-soft">{intro}</p>
         </Reveal>

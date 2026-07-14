@@ -7,9 +7,9 @@ export const Route = createFileRoute("/services/restauration")({
   head: () => ({
     meta: [
       { title: "Restauration & Cafés | One Retail" },
-      { name: "description", content: "Venezia Ice et Dahab Coffee — restauration et cafés signés One Retail." },
+      { name: "description", content: "Venezia Ice et Dahab Coffee   restauration et cafés signés One Retail." },
       { property: "og:title", content: "Restauration & Cafés | One Retail" },
-      { property: "og:description", content: "Venezia Ice et Dahab Coffee — restauration et cafés." },
+      { property: "og:description", content: "Venezia Ice et Dahab Coffee   restauration et cafés." },
     ],
   }),
   component: RestaurationPage,
